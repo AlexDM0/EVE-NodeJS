@@ -1,0 +1,108 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.29
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json evejs-agents@0.1.0 No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose install where, deps [ 'C:\\Dropbox\\Almende\\PHPstorm\\NodejsEve', [ 'evejs' ] ]
+8 info preinstall evejs-agents@0.1.0
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'evejs@./evejs', null ]
+11 verbose cache add name=undefined spec="evejs@./evejs" args=["evejs@./evejs",null]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: 'evejs@./evejs',
+12 verbose parsed url   path: 'evejs@./evejs',
+12 verbose parsed url   href: 'evejs@./evejs' }
+13 verbose cache add name="evejs" spec="./evejs" args=["evejs","./evejs"]
+14 verbose parsed url { protocol: null,
+14 verbose parsed url   slashes: null,
+14 verbose parsed url   auth: null,
+14 verbose parsed url   host: null,
+14 verbose parsed url   port: null,
+14 verbose parsed url   hostname: null,
+14 verbose parsed url   hash: null,
+14 verbose parsed url   search: null,
+14 verbose parsed url   query: null,
+14 verbose parsed url   pathname: './evejs',
+14 verbose parsed url   path: './evejs',
+14 verbose parsed url   href: './evejs' }
+15 verbose addNamed [ 'evejs', './evejs' ]
+16 verbose addNamed [ null, null ]
+17 silly lockFile 3945b4df-evejs-evejs evejs@./evejs
+18 verbose lock evejs@./evejs C:\Users\Alex\AppData\Roaming\npm-cache\3945b4df-evejs-evejs.lock
+19 info addNameTag [ 'evejs', './evejs' ]
+20 verbose url raw evejs
+21 verbose url resolving [ 'https://registry.npmjs.org/', './evejs' ]
+22 verbose url resolved https://registry.npmjs.org/evejs
+23 info trying registry request attempt 1 at 18:25:17
+24 http GET https://registry.npmjs.org/evejs
+25 http 404 https://registry.npmjs.org/evejs
+26 verbose headers { date: 'Mon, 07 Jul 2014 16:25:16 GMT',
+26 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 verbose headers   'content-type': 'application/json',
+26 verbose headers   'cache-control': 'max-age=0',
+26 verbose headers   'content-length': '52',
+26 verbose headers   'accept-ranges': 'bytes',
+26 verbose headers   via: '1.1 varnish',
+26 verbose headers   age: '0',
+26 verbose headers   'x-served-by': 'cache-ams4122-AMS',
+26 verbose headers   'x-cache': 'MISS',
+26 verbose headers   'x-cache-hits': '0',
+26 verbose headers   'x-timer': 'S1404750316.664577,VS0,VE169',
+26 verbose headers   'keep-alive': 'timeout=10, max=50',
+26 verbose headers   connection: 'Keep-Alive' }
+27 silly registry.get cb [ 404,
+27 silly registry.get   { date: 'Mon, 07 Jul 2014 16:25:16 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=0',
+27 silly registry.get     'content-length': '52',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     'x-served-by': 'cache-ams4122-AMS',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1404750316.664577,VS0,VE169',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 info maybeGithub Attempting ./evejs from git://github.com/./evejs
+29 silly lockFile 25add06d-git-github-com-evejs git://github.com/./evejs
+30 verbose lock git://github.com/./evejs C:\Users\Alex\AppData\Roaming\npm-cache\25add06d-git-github-com-evejs.lock
+31 verbose addRemoteGit [ 'git://github.com/./evejs', 'master' ]
+32 silly lockFile 25add06d-git-github-com-evejs git://github.com/./evejs
+33 silly lockFile 25add06d-git-github-com-evejs git://github.com/./evejs
+34 info maybeGithub Attempting ./evejs from git+ssh://git@github.com:./evejs
+35 silly lockFile ac9c52e0-git-github-com-evejs git@github.com:./evejs
+36 verbose lock git@github.com:./evejs C:\Users\Alex\AppData\Roaming\npm-cache\ac9c52e0-git-github-com-evejs.lock
+37 verbose addRemoteGit [ 'git@github.com:./evejs', 'master' ]
+38 silly lockFile ac9c52e0-git-github-com-evejs git@github.com:./evejs
+39 silly lockFile ac9c52e0-git-github-com-evejs git@github.com:./evejs
+40 silly lockFile 3945b4df-evejs-evejs evejs@./evejs
+41 silly lockFile 3945b4df-evejs-evejs evejs@./evejs
+42 error 404 404 Not Found: evejs
+42 error 404
+42 error 404 'evejs' is not in the npm registry.
+42 error 404 You should bug the author to publish it
+42 error 404 It was specified as a dependency of 'evejs-agents'
+42 error 404
+42 error 404 Note that you can also install from a
+42 error 404 tarball, folder, or http url, or git url.
+43 error System Windows_NT 6.1.7601
+44 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+45 error cwd C:\Dropbox\Almende\PHPstorm\NodejsEve\testLife
+46 error node -v v0.10.29
+47 error npm -v 1.4.14
+48 error code E404
+49 verbose exit [ 1, true ]

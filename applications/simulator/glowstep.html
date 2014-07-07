@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="glowsteps.css">
+    <style>
+        body {
+            margin: 0px 0px 0px 0px;
+            background-color: #313131;
+        }
+
+        div.initializationDescription {
+            padding:0px 10px 0px 10px;
+            text-align:justify;
+        }
+
+        div.text {
+            color: #f4f4f4;
+            font-family: stencil;
+            font-weight: normal;
+            font-size: 60px;
+            margin: 10px 0px 0px 250px;
+        }
+
+        div.header {
+            margin: 10px 10px 10px 10px;
+            border-style: solid; border-width: 1px; border-color: #4e5052;
+            width:1460px;
+            height:90px;
+        }
+
+        div.container {
+            position:absolute;
+            left:270px;
+            border-style: solid; border-width: 1px;
+            border-color: #4d4f53;
+            width:1200px;
+            height:780px;
+            background: url("images/concrete.jpg");
+        }
+
+        div.controls {
+            color: #ffffff;
+            position:absolute;
+            left:10px;
+            border-style: solid; border-width: 1px; border-color: #4e5052;
+            width:240px;
+            height:770px;
+            padding:10px 0px 00px 10px;
+        }
+
+        div.header {
+
+        }
+
+        input[type="button"]  {
+            width:230px;
+        }
+
+        input[type="text"]  {
+            width:147px;
+        }
+
+        div.visContainer {
+            position:absolute;
+            width:300px;
+            height:880px;
+            border-color: #ffffff;
+            border-style:solid;
+            border-width:1px;
+            top:10px;
+            left:1485px;
+            background-color: #383838;
+        }
+
+    </style>
+    <script language="JavaScript" src="vis.min.js"></script>
+    <script language="JavaScript" src="mousetrap.min.js"></script>
+    <script language="JavaScript" src="hammer.min.js"></script>
+    <script language="JavaScript" src="EveCommunication.js"></script>
+    <script language="JavaScript" src="GlowStep.js"></script>
+    <script language="JavaScript" src="simulator.js"></script>
+
+</head>
+<body>
+      <div class="header" id="headerDiv">
+          <div class="glow red" style="left:25px; top:20px;"></div>
+          <div class="glowstep red" style="left:25px; top:20px;"></div>
+          <div class="glow orange" style="left:50px; top:20px;"></div>
+          <div class="glowstep orange" style="left:50px; top:20px;"></div>
+          <div class="glow yellow" style="left:75px; top:20px;"></div>
+          <div class="glowstep yellow" style="left:75px; top:20px;"></div>
+          <div class="glow green" style="left:100px; top:20px;"></div>
+          <div class="glowstep green" style="left:100px; top:20px;"></div>
+          <div class="glow cyan" style="left:125px; top:20px;"></div>
+          <div class="glowstep cyan" style="left:125px; top:20px;"></div>
+          <div class="glow blue" style="left:150px; top:20px;"></div>
+          <div class="glowstep blue" style="left:150px; top:20px;"></div>
+          <div class="text">GlowStep Simulator</div>
+      </div>
+      <div class="controls" id="controlDiv">
+          <div class="initializationDescription" id="initializationDescription">
+            <h2>Initialization:</h2>
+            First add the required number of glowsteps on the playground. This is done by selecting the amount
+            in the input field and arranging them either in a grid or randomly.
+            <br /><br />
+              After this you can drag them around by clicking and dragging. Once you're satisfied with the layout,
+              press the start simulation button.
+          </div>
+          <div class="initializationDescription"  id="simulationDescription" style="display:none;">
+              <h2>Simulation:</h2>
+              Click a glowstep to mimic someone stepping on it. You can hold shift and drag it around. The nearest neighbours will be
+              recalculated on dropping the glowstep.
+          </div>
+          <br /><br />
+          <div class="controlButtons" id="controlButtons">
+              # glowsteps: <input type="text" id="numberOfSteps" value="25"> <br />
+              <input type="button" value="Arrange in Grid" id="buttonGrid"><br />
+              <input type="button" value="Arrange Randomly" id="buttonRandom"><br />
+              <br />
+              <input type="button" value="Start simulation" id="buttonStartSimulation" disabled="true"><br />
+          </div>
+      </div>
+      <div class="container" id="containerDiv">
+
+      </div>
+
+        <div class="visContainer" id="visContainer">
+
+        </div>
+
+
+</body>
+</html>
