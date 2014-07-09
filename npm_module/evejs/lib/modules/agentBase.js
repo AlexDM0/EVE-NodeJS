@@ -2,7 +2,7 @@
  * Created by Alex on 4/24/14.
  */
 
-var util = require("./util");
+var util = require("../util");
 
 /**
  * This function returns a constructor for an agent. It mixes in standard functions all agents can use.
@@ -38,37 +38,6 @@ function AgentBase(agentImplementation) {
       else                         {message['id'] = messageId;}
 
       EveSystem.sendMessage(destination, message, newAgent.agentName, callback);
-    };
-
-//    publish stucture = {
-//      address: *,
-//      origin: agentId,
-//      UID:  ##,
-//      content: {
-//        topic: topicName,
-//        data: {}   String | Number | object
-//      }
-//    }
-    newAgent.publish = function (topic, message) {
-      var messageContent = {data:message};
-      messageContent["topic"] = topic;
-      EveSystem.sendMessage.apply(EveSystem,["*", messageContent, newAgent.agentName, function() {}]);
-    };
-
-    // subscribe to a topic with a callback function.
-    newAgent.subscribe = function (topic, callback) {
-      EveSystem.subscribeAgent.apply(EveSystem,[newAgent.agentName, topic, callback]);
-    };
-
-    // unsubscribe from a topic. If the callback is not defined or null, the agent is fully unsubscribed from the topic.
-    // if the topic is undefined or null, the agent is unsubscribed from all topics.
-    newAgent.unsubscribe = function (topic, callback) {
-      EveSystem.unsubscribeAgent.apply(EveSystem,[newAgent.agentName, topic, callback]);
-    };
-
-    // unsubscribe from all topics.
-    newAgent.unsubscribeAll = function() {
-      newAgent.unsubscribe(null,null);
     };
 
     // do something later
@@ -109,7 +78,6 @@ function AgentBase(agentImplementation) {
     };
 
     // initialize the agent.
-    newAgent.init(EveSystem);
     return newAgent;
   };
 }

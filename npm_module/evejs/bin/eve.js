@@ -3,7 +3,7 @@
  */
 
 module.exports = Eve;
-var agentBase = require("../lib/agentBase.js");
+var agentBase = require("../lib/modules/agentBase.js");
 
 /**
  *  Eve handles the composition of messages, routing, delivering and implementing callbacks.
@@ -71,29 +71,52 @@ Eve.prototype.addTransport = function(transport) {
  * This function loads the agent implementation from the filename and initializes it.
  *
  * @param {object} agentDescription | {agentClass: "path to *.js to require", name: "agentName"}
+ * @param {Boolean} noModules       | do not load modules
  */
-Eve.prototype.addAgent = function(agentDescription) {
+Eve.prototype.addAgent = function(agentDescription, noModules) {
   var agentName = agentDescription.name;
   var agentImplementation = agentDescription.agentClass;
   var options = agentDescription.options || {};
+  var module;
 
   if (this.agents[agentName] !== undefined) {
     console.log("ERROR: ", agentName, " already exists!");
   }
   else {
     this.callbacks[agentName] = {};
-    var agent = agentBase(require("../../../" + agentImplementation));
+    var agentClass = this.requireFromPaths("../../../", "../lib/agents/", agentImplementation);
+    var agent = agentBase(agentClass);
     this.agents[agentName] = agent(agentName,options, this);
 
-    if (this.agentModules !== undefined) {
+    if (this.agentModules !== undefined && noModules != true) {
       for (var i = 0; i < this.agentModules.length; i++) {
-        var module = require("../../../" + this.agentModules[i]);
+        module = this.requireFromPaths("../../../", "../lib/modules/", this.agentModules[i]);
         module(this.agents[agentName], this);
       }
     }
+
+    // initialize the agent
+    this.agents[agentName].init.call(this.agents[agentName],this);
   }
 };
 
+
+Eve.prototype.requireFromPaths = function(path1, path2, filename) {
+  var required;
+  try {
+    required = require(path1 + filename);
+  }
+  catch(e) {
+    try {
+      required = require(path2 + filename);
+    }
+    catch(e2) {
+      console.error("Cannot find: " + filename);
+      process.exit(e2.code);
+    }
+  }
+  return required;
+}
 
 /**
  * Remove an agent specified with the agentId.
@@ -203,128 +226,3 @@ Eve.prototype.timeoutCallback = function(agentId, messageId) {
   }
 };
 
-
-/**
- * This function looks for the agent that is addressed by this message. If the message is published (agentId = *),
- * it is delivered to the subscribers.
- *
- * @param {Object} message   | JSON-RPC object
- * @param {String} agentId   | agentId (== agant name) of the agent who is the recipient of the message
- * @returns {boolean}        | message delivered (false for published)
- */
-Eve.prototype.routeMessage = function(message, agentId) {
-  if (agentId == "*") {
-    // if an agent in this eve has subscribed to this topic, deliver it
-    if (this.topics[message.topic] !== undefined) {
-      this.deliverToSubscribers(message.topic, message.data);
-    }
-    return false;
-  }
-  else {
-    if (this.agents[agentId] !== undefined) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-};
-
-
-/**** publish/subscribe functions: ****/
-
-/**
- * This function delivers a published message to its subscribers.
- *
- * @param {String} topic    | Topic name
- * @param {object} message  | JSON message
- */
-Eve.prototype.deliverToSubscribers = function(topic, message) {
-  for (var agentId in this.topics[topic].agents) {
-    var callbacks = this.topics[topic].agents[agentId].callbacks;
-    for (var i = 0; i < callbacks.length; i++) {
-      var agent = this.agents[agentId];
-      var callback = callbacks[i];
-      callback.apply(agent, [message]);
-    }
-  }
-};
-
-
-/**
- * Subscribe an agent to a topic. The callback is fired when something is published on the topic.
- *
- * @param {String}   agentId  | Id of agent to subscribe
- * @param {String}   topic    | Topic name
- * @param {function} callback | Function to handle the data published to the topic
- */
-Eve.prototype.subscribeAgent = function(agentId, topic, callback) {
-  // if no topic, create topic
-  if (this.topics[topic] === undefined) {
-    this.topics[topic] = {agents: {}, subscriberCount:0};
-  }
-
-  // if agent has not subscribed to this topic before, create agent slot
-  if (this.topics[topic][agentId] === undefined) {
-    this.topics[topic].agents[agentId] = {callbacks:[]};
-  }
-
-  // add the callback to the topic
-  this.topics[topic].agents[agentId].callbacks.push(callback);
-
-  // one more subscriber to this topic.
-  this.topics[topic].subscriberCount += 1;
-};
-
-
-/**
- * Remove a subscription
- *
- * @param agentId
- * @param topic
- * @param [callback]
- * @returns {boolean}
- */
-Eve.prototype.unsubscribeAgent = function(agentId, topic, callback) {
-  // unsubscribe agent from all topics and cleanup
-  if (topic === null || topic === undefined) {
-    for (var topicName in this.topics) {
-      if (this.topics[topicName].agents[agentId] !== undefined) {
-        delete this.topics[topicName].agents[agentId];
-        this.topics[topicName].subscriberCount -= 1;
-
-        if (this.topics[topicName].subscriberCount == 0) {
-          delete this.topics[topicName];
-        }
-      }
-    }
-    return;
-  }
-
-  // no agents are subscribed to this topic: return aborts execution of the rest of the function
-  if (!topic   in this.topics)               {return;}
-  if (!agentId in this.topics[topic].agents) {return;}
-
-  // the agent has only subscribed to the topic with one callback.
-  if (this.topics[topic].agents[agentId].callbacks.length == 1 || callback === undefined || callback == null) {
-    delete this.topics[topic].agents[agentId];
-
-    // one subscriber less to this topic
-    this.topics[topic].subscriberCount -= 1;
-
-    // if this was the last agent to unsubscribe, we can delete the topic.
-    if (this.topics[topic].subscriberCount == 0) {
-      delete this.topics[topic];
-    }
-  }
-  else {
-    // if there are more than one callbacks, delete the first match.
-    for (var i = 0; i < this.topics[topic].agents[agentId].callbacks.length; i++) {
-      if (this.topics[topic].agents[agentId].callbacks[i] == callback) {
-        this.topics[topic].agents[agentId].callbacks.splice(i,1);
-        break;
-      }
-    }
-  }
-  return;
-};

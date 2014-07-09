@@ -17,12 +17,13 @@ var eveOptions = {
     }
   ],
   agents: [
-    {agentClass: "./agents/games/admin.js", name: "admin"}
+    {agentClass: "./agents/games/admin", name: "admin"}
   ],
   agentModules: [
-    "./agents/agentModules/glowstepModule.js",
-    "./agents/agentModules/localizationModule.js",
-    "./agents/agentModules/simulationModule.js"
+    "publishSubscribe",
+    "./agents/agentModules/glowstepModule",
+    "./agents/agentModules/localizationModule",
+    "./agents/agentModules/simulationModule"
   ]
 
 };

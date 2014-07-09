@@ -17,8 +17,7 @@ var P2PImplementation = {
     var senderAddress = this.prefix + senderId;
     var agentId = this.getAgentId(receiverAddress);
 
-    var recipientFound = this.eve.routeMessage(message, agentId);
-    if (recipientFound == true) {
+    if (this.eve.agents[agentId] !== undefined) {
       if (message["method"] !== undefined) { // if this message is not a response (has a "method" method)
         var agent = this.eve.agents[agentId];
         var reply = this.eve.deliverMessage(message, agentId, senderId);

@@ -16,6 +16,9 @@ var eveOptions = {
   ],
   agents: [
     {agentClass: "./agents/test/agent1.js", name: "test"}
+  ],
+  agentModules: [
+    "publishSubscribe"
   ]
 };
 var eve = new Eve(eveOptions);

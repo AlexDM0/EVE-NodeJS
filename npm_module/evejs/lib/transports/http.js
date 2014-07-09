@@ -18,7 +18,6 @@ var HTTPImplementation = {
   // required init function
   init : function(options, eve) {
     this.eve = eve;
-    this.server = "";
     this.port = options.port || 3000;
     this.path = options.path || "agents/";
     if (this.path.slice(-1) != "/") {this.path += "/";}
@@ -141,8 +140,7 @@ var HTTPImplementation = {
       request.on('end', function () {
         var message = JSON.parse(body);
         response.writeHead(200, headers);
-        var recipientFound = me.eve.routeMessage(message, agentId);
-        if (recipientFound == true) {
+        if (me.eve.agents[agentId] !== undefined) {
           // if this message is not a response (has a "method" method)
           if ("method" in message) {
             var reply = me.eve.deliverMessage(message, agentId, senderId);

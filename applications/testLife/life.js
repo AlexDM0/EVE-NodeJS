@@ -35,14 +35,14 @@ for (var i = 0; i < gridWidth*gridHeight; i++) {
     state = '+';
   }
   gameOfLifeAgents.push({
-    agentClass: './agents/gameOfLife/gameOfLifeAgent.js',
+    agentClass: './agents/gameOfLife/gameOfLifeAgent',
     name: "Agent_" + i,
     options:{width:gridWidth, height:gridHeight, alive:states[i] || state, maxCycles:maxCycles}
   })
 }
 
 gameOfLifeAgents.push({
-  agentClass: './agents/gameOfLife/gameOfLifeManager.js',
+  agentClass: './agents/gameOfLife/gameOfLifeManager',
   name: "manager",
   options: {width: gridWidth, height: gridHeight}
 });
