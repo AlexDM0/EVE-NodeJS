@@ -2,7 +2,7 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="glowsteps.css">
+    <link rel="stylesheet" type="text/css" href="./css/glowsteps.css">
     <style>
         body {
             margin: 0px 0px 0px 0px;
@@ -74,12 +74,12 @@
         }
 
     </style>
-    <script language="JavaScript" src="vis.min.js"></script>
-    <script language="JavaScript" src="mousetrap.min.js"></script>
-    <script language="JavaScript" src="hammer.min.js"></script>
-    <script language="JavaScript" src="EveCommunication.js"></script>
-    <script language="JavaScript" src="GlowStep.js"></script>
-    <script language="JavaScript" src="simulator.js"></script>
+    <script language="JavaScript" src="./js/vis.min.js"></script>
+    <script language="JavaScript" src="./js/mousetrap.min.js"></script>
+    <script language="JavaScript" src="./js/hammer.min.js"></script>
+    <script language="JavaScript" src="./js/EveCommunication.js"></script>
+    <script language="JavaScript" src="./js/GlowStep.js"></script>
+    <script language="JavaScript" src="./js/simulator.js"></script>
 
 </head>
 <body>
@@ -115,6 +115,7 @@
           <br /><br />
           <div class="controlButtons" id="controlButtons">
               # glowsteps: <input type="text" id="numberOfSteps" value="25"> <br />
+              agent path: ./agents/games/<input type="text" id="agentPath" value="toggle" style="width:50px;">.js <br />
               <input type="button" value="Arrange in Grid" id="buttonGrid"><br />
               <input type="button" value="Arrange Randomly" id="buttonRandom"><br />
               <br />

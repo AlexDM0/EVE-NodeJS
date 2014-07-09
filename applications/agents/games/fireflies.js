@@ -3,8 +3,7 @@
  */
 
 
-var agentBase = require("../agentBase.js");
-module.exports = agentBase(firefly);
+
 
 /****
  * Agent code below here:
@@ -56,3 +55,4 @@ firefly.sync = function(data) {
   }
 };
 
+module.exports = firefly;

@@ -1,7 +1,7 @@
 /**
  * Created by Alex on 4/24/14.
  */
-var Eve = require('evejs').eve;
+var Eve = require('evejs');
 //
 //agent1 = "0";
 //
@@ -35,23 +35,23 @@ for (var i = 0; i < gridWidth*gridHeight; i++) {
     state = '+';
   }
   gameOfLifeAgents.push({
-    agentClass: './agents/gameOfLifeAgent.js',
+    agentClass: './agents/gameOfLife/gameOfLifeAgent.js',
     name: "Agent_" + i,
     options:{width:gridWidth, height:gridHeight, alive:states[i] || state, maxCycles:maxCycles}
   })
 }
 
 gameOfLifeAgents.push({
-  agentClass:'./agents/gameOfLifeManager.js',
+  agentClass: './agents/gameOfLife/gameOfLifeManager.js',
   name: "manager",
-  options:{width:gridWidth, height:gridHeight}
-})
+  options: {width: gridWidth, height: gridHeight}
+});
 
 
 var eveOptions = {
   transports: [
-//    {protocol: "p2p"}
-    {protocol: "http",options: {port: 3000,path: "agents/"}}
+    {protocol: "p2p"},
+//    {protocol: "http",options: {port: 3000,path: "agents/"}}
   ]
   ,
   agents: gameOfLifeAgents

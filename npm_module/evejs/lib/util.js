@@ -6,11 +6,11 @@ var util = {};
  * 9e17 is close to max of var
  * @return {String} uuid
  */
-util.getUID = function() {
+util.getUID = function () {
   return Math.floor(Math.random() * 9e17).toString(36);
-}
+};
 
-util.getType = function(object) {
+util.getType = function (object) {
   if (object === null) {
     return "null";
   }
@@ -29,6 +29,6 @@ util.getType = function(object) {
   else {
     return "don't know";
   }
-}
+};
 
 module.exports = util;

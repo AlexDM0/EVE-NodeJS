@@ -33,9 +33,9 @@ var MeshImplementation = {
     var message = {
       address: fullAddress,
       origin: this.prefix + agentId,
-      UID:UID,
+      UID: UID,
       content: messageContent
-    }
+    };
     return message;
   },
 

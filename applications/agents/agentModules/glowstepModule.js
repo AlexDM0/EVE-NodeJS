@@ -15,14 +15,14 @@ function glowstepModule(newAgent, EveSystem) {
 
   newAgent.lightColor = '0,0,0';
 
-  newAgent.RPCfunctions.steppedOn = function (params,callback) {
+  newAgent.RPCfunctions.steppedOn = function (params) {
     this.steppedOn();
-    callback({result:this.lightColor, error:0});
+    return this.lightColor;
   };
 
-  newAgent.setColor = function(r,g,b) {
+  newAgent.setColor = function (r, g, b) {
     this.lightColor = r + ',' + g + ',' + b;
-  }
+  };
 
   return newAgent;
 }

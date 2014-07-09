@@ -2,7 +2,8 @@
  * Created by Alex on 4/24/14.
  */
 
-var util = require("evejs").util;
+var util = require("./util");
+
 /**
  * This function returns a constructor for an agent. It mixes in standard functions all agents can use.
  *
@@ -93,19 +94,19 @@ function AgentBase(agentImplementation) {
     };
 
     // stop repeating a certain repeat
-    newAgent.stopRepeating = function(id) {
+    newAgent.stopRepeating = function (id) {
       clearInterval(id);
-      newAgent.repeatIds.splice(newAgent.repeatIds.indexOf(id),1);
-    }
+      newAgent.repeatIds.splice(newAgent.repeatIds.indexOf(id), 1);
+    };
 
     // stop repeating all repeating functions
-    newAgent.stopRepeatingAll = function() {
+    newAgent.stopRepeatingAll = function () {
       for (var i = 0; i < newAgent.repeatIds.length; i++) {
         clearInterval(newAgent.repeatIds[i]);
         newAgent.repeatIds.shift();
         i--;
       }
-    }
+    };
 
     // initialize the agent.
     newAgent.init(EveSystem);

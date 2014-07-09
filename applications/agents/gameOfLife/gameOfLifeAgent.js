@@ -80,15 +80,11 @@ gameOfLifeAgent.getNeighbours = function() {
   for (var nId in neighbours) {
     if (neighbours.hasOwnProperty(nId)) {
       this.neighbours.push("Agent_" + neighbours[nId]);
-      //this.neighbours["Agent_" + neighbours[nId]] = {alive:false, cycle:0};
     }
   }
-
-//  console.log(this.neighbours,this.agentName)
 };
 
-gameOfLifeAgent.RPCfunctions.collect = function (params, callback) {
-  callback({result:'ok',error:0});
+gameOfLifeAgent.RPCfunctions.collect = function (params, senderId) {
   if (params.cycle == this.cycle) {
     this.cycleMatchCount += 1;
     if (params.alive == true) {
@@ -99,14 +95,9 @@ gameOfLifeAgent.RPCfunctions.collect = function (params, callback) {
   if (this.cycleMatchCount == 8) {
     this.processRules();
   }
-
-//  this.neighbours[params._senderId].cycle = params.cycle;
-//  this.neighbours[params._senderId].alive = params.alive;
-//  this.processRules();
-//  callback({result:'ok',error:0});
 };
 
-gameOfLifeAgent.processRules = function() {
+gameOfLifeAgent.processRules = function () {
   this.cycle += 1;
   if (this.amountAlive < 2 || this.amountAlive > 3) {
     this.alive = false;
@@ -117,12 +108,12 @@ gameOfLifeAgent.processRules = function() {
   this.amountAlive = 0;
   this.cycleMatchCount = 0;
   if (this.cycle <= this.maxCycles) {
-   this.updateNeighbours();
+    this.updateNeighbours();
   }
   else {
-    this.send("manager",{method:"end",params:{}});
+    this.send("manager", {method: "end", params: {}});
   }
-}
+};
 
 
 gameOfLifeAgent.updateNeighbours = function () {
@@ -131,10 +122,8 @@ gameOfLifeAgent.updateNeighbours = function () {
   }
 };
 
-gameOfLifeAgent.RPCfunctions.start = function(params,callback) {
-  callback({result:'ok',error:0});
+gameOfLifeAgent.RPCfunctions.start = function(params, senderId) {
   this.updateNeighbours();
 };
 
-var agentBase = require("./agentBase.js");
-module.exports = agentBase(gameOfLifeAgent);
+module.exports = gameOfLifeAgent;

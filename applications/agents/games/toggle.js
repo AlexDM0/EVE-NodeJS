@@ -11,13 +11,14 @@
  this.subscribe
  this.unsubscribe
  this.schedule
- this.clearSchedule // new
+ this.clearSchedule
  this.repeat
  this.stopRepeating
 
 
  this.setColor // r,g,b
- this.agents = [] // up to date position array of agents
+ this.agents = [] // up-to-date position array of agents
+ this.agentName // agentID
  */
 
 
@@ -45,13 +46,10 @@ glowStep.steppedOn = function() {
 };
 
 // mandatory function
-glowStep.steppedOff = function() {
+glowStep.steppedOff = function () {
 
-}
-
-
+};
 
 
 
-var agentBase = require("../agentBase.js");
-module.exports = agentBase(glowStep);
+module.exports = glowStep;

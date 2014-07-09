@@ -32,27 +32,27 @@ glowStep.init = function () {
   this.scheduledTimer = this.schedule(this.activate, 5000 + Math.random * 15000);
 };
 
-glowStep.activate = function() {
+glowStep.activate = function () {
   if (this.activeState == false) {
-    this.setColor(0,255,0);
+    this.setColor(0, 255, 0);
     this.activeState = true;
-    this.sendToNeighbours({method:'resetTimer',params:{},callback:null});
+    this.sendToNeighbours({method: 'resetTimer', params: {}, callback: null});
     this.schedule(this.deactivate, 3000);
   }
-}
+};
 
-glowStep.deactivate = function() {
+glowStep.deactivate = function () {
   if (this.activeState == true) {
-    this.setColor(0,0,0);
+    this.setColor(0, 0, 0);
     this.activeState = false;
     this.resetTimer();
   }
-}
+};
 
-glowStep.resetTimer = function() {
+glowStep.resetTimer = function () {
   this.clearSchedule(this.scheduledTimer);
   this.scheduledTimer = this.schedule(this.activate, 5000 + Math.random * 15000);
-}
+};
 
 glowStep.steppedOn = function() {
   if (this.activeState == false) {
@@ -69,30 +69,29 @@ glowStep.steppedOn = function() {
   }
 };
 
-glowStep.steppedOff = function() {
+glowStep.steppedOff = function () {
   this.blocked = false;
   this.deactivate();
-}
+};
 
 
 
-glowStep.RPCfunctions.resetTimer = function(params,callback) {
+glowStep.RPCfunctions.resetTimer = function (params) {
   this.resetTimer();
-}
+};
 
-glowStep.RPCfunctions.activate = function(params,callback) {
+glowStep.RPCfunctions.activate = function (params) {
   if (this.blocked == false) {
     this.activate();
   }
-}
+};
 
-glowStep.RPCfunctions.flash = function(params,callback) {
-  this.setColor(params.r,params.g,params.b);
-  this.schedule(this.deactivate,50);
-}
-
-
+glowStep.RPCfunctions.flash = function (params) {
+  this.setColor(params.r, params.g, params.b);
+  this.schedule(this.deactivate, 50);
+};
 
 
-var agentBase = require("./agentBase.js");
-module.exports = agentBase(glowStep);
+
+
+module.exports = glowStep;

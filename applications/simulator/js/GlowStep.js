@@ -4,7 +4,9 @@
 
 
 
-function GlowStep (id, x, y, container, options, nodesData, edgesData) {
+function GlowStep (id, x, y, container, options, nodesData, edgesData, agentPath) {
+  this.agentPath = agentPath;
+  console.log(agentPath);
   this.id = id;
   this.x = x;
   this.y = y;
@@ -23,84 +25,86 @@ function GlowStep (id, x, y, container, options, nodesData, edgesData) {
 }
 
 
-GlowStep.prototype.create = function() {
+GlowStep.prototype.create = function () {
   this.htmlShadowElement = document.createElement("div");
   this.htmlShadowElement.className = 'shadow';
   this.htmlShadowElement.id = "shadow_" + this.id;
-  this.htmlShadowElement.style.top =  this.y + 1 + "px";
+  this.htmlShadowElement.style.top = this.y + 1 + "px";
   this.htmlShadowElement.style.left = this.x + 1 + "px";
   this.container.appendChild(this.htmlShadowElement);
 
   this.htmlGlowElement = document.createElement("div");
   this.htmlGlowElement.className = 'glow';
   this.htmlGlowElement.id = "glow_" + this.id;
-  this.htmlGlowElement.style.top =  this.y + "px";
+  this.htmlGlowElement.style.top = this.y + "px";
   this.htmlGlowElement.style.left = this.x + "px";
   this.container.appendChild(this.htmlGlowElement);
 
   this.htmlElement = document.createElement("div");
   this.htmlElement.className = 'glowstep';
   var color = '50,50,50'
-  var mainBackground = '-webkit-radial-gradient(center, ellipse cover, rgba(20,20,20,1) 0%,rgba(40,40,40,1) 38%,rgba(60,60,60,1) 40%,rgba(0,0,0,0) 42%,rgba(0,0,0,0) 100%), url("glowstep_inner_mask.png"), -webkit-radial-gradient(center, ellipse cover, rgba(' + color + ',0.8) 0%,rgba(255,255,255,0.4) 10%,rgba(255,255,255,0) 75%,rgba(255,255,255,0) 100%), url("glowstep_outer_mask.png"), rgb(' + color + ')';
+  var mainBackground = '-webkit-radial-gradient(center, ellipse cover, rgba(20,20,20,1) 0%,rgba(40,40,40,1) 38%,rgba(60,60,60,1) 40%,rgba(0,0,0,0) 42%,rgba(0,0,0,0) 100%), url("./images/glowstep_inner_mask.png"), -webkit-radial-gradient(center, ellipse cover, rgba(' + color + ',0.8) 0%,rgba(255,255,255,0.4) 10%,rgba(255,255,255,0) 75%,rgba(255,255,255,0) 100%), url("./images/glowstep_outer_mask.png"), rgb(' + color + ')';
 
   this.htmlElement.id = this.id;
-  this.htmlElement.style.top =  this.y + "px";
+  this.htmlElement.style.top = this.y + "px";
   this.htmlElement.style.left = this.x + "px";
   this.htmlElement.style.background = mainBackground;
   this.container.appendChild(this.htmlElement);
 
-  this.nodesData.add({id:this.id, label:this.id, x: this.imagineX, y: this.imagineY})
+  this.nodesData.add({id: this.id, label: this.id, x: this.imagineX, y: this.imagineY})
 
   this.hammer = Hammer(this.htmlElement, {prevent_default: true});
 
   var me = this;
-  this.hammer.on('tap',       me.steppedOn.bind(me));
-  this.hammer.on('drag',      me._onDrag.bind(me) );
-  this.hammer.on('dragend',   me._onDragEnd.bind(me) );
-}
+  this.hammer.on('tap', me.steppedOn.bind(me));
+  this.hammer.on('drag', me._onDrag.bind(me));
+  this.hammer.on('dragend', me._onDragEnd.bind(me));
+};
 
-GlowStep.prototype.initialize = function() {
+GlowStep.prototype.initialize = function () {
   this.initialized = true;
-  addAgent(this.id, "games/toggle.js");
+  addAgent(this.id, "./agents/games/" + this.agentPath + ".js");
   this.htmlElement.onclick = this.steppedOn.bind(this);
   this.updatePosition(true);
   console.log('initialized agent')
-}
+};
 
-GlowStep.prototype.checkColor = function() {
-  askAgent(this.url, "getColor", null, function(data) {
-    me.changeColor.call(me,data.result);
+GlowStep.prototype.checkColor = function () {
+  askAgent(this.url, "getColor", null, function (data) {
+    me.changeColor.call(me, data.result);
   });
-}
+};
 
-GlowStep.prototype.changeColor = function(color) {
-  if (color == "0,0,0") {color = "50,50,50";} // not fully black
-  var mainBackground = '-webkit-radial-gradient(center, ellipse cover, rgba(20,20,20,1) 0%,rgba(40,40,40,1) 38%,rgba(60,60,60,1) 40%,rgba(0,0,0,0) 42%,rgba(0,0,0,0) 100%), url("glowstep_inner_mask.png"), -webkit-radial-gradient(center, ellipse cover, rgba(' + color + ',0.8) 0%,rgba(255,255,255,0.4) 10%,rgba(255,255,255,0) 75%,rgba(255,255,255,0) 100%), url("glowstep_outer_mask.png"), rgb(' + color + ')';
+GlowStep.prototype.changeColor = function (color) {
+  if (color == "0,0,0") {
+    color = "50,50,50";
+  } // not fully black
+  var mainBackground = '-webkit-radial-gradient(center, ellipse cover, rgba(20,20,20,1) 0%,rgba(40,40,40,1) 38%,rgba(60,60,60,1) 40%,rgba(0,0,0,0) 42%,rgba(0,0,0,0) 100%), url("./images/glowstep_inner_mask.png"), -webkit-radial-gradient(center, ellipse cover, rgba(' + color + ',0.8) 0%,rgba(255,255,255,0.4) 10%,rgba(255,255,255,0) 75%,rgba(255,255,255,0) 100%), url("./images/glowstep_outer_mask.png"), rgb(' + color + ')';
   var glowBackground = '-webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 10%,rgba(255,255,255,0) 60%),  -webkit-radial-gradient(center, ellipse cover, rgb(' + color + ') 20%,rgba(255,255,255,0) 75%)';
   this.htmlElement.style.background = mainBackground;
   this.htmlGlowElement.style.background = glowBackground;
-  this.nodesData.update({id:this.id, color:'rgb('+color+')'});
-}
+  this.nodesData.update({id: this.id, color: 'rgb(' + color + ')'});
+};
 
-GlowStep.prototype.getConnections = function() {
+GlowStep.prototype.getConnections = function () {
   var me = this;
-  askAgent(this.url, "getConnectedNodes", null, function(data) {
-    me.setConnections.call(me,data.result);
+  askAgent(this.url, "getConnectedNodes", null, function (data) {
+    me.setConnections.call(me, data.result);
   }, false);
-}
+};
 
-GlowStep.prototype.setConnections = function(connectedNodes) {
+GlowStep.prototype.setConnections = function (connectedNodes) {
   var updateCommand = [];
   for (var i = 0; i < connectedNodes.length; i++) {
-    updateCommand.push({from:this.id, to: connectedNodes[i].id});
+    updateCommand.push({from: this.id, to: connectedNodes[i].id});
   }
   this.edgesData.add(updateCommand);
-}
+};
 
-GlowStep.prototype._getPointer = function(event) {
+GlowStep.prototype._getPointer = function (event) {
   return {x: event.gesture.center.pageX - this.container.offsetLeft,
-          y: event.gesture.center.pageY - this.container.offsetTop};
-}
+    y: event.gesture.center.pageY - this.container.offsetTop};
+};
 
 
 /**
@@ -131,11 +135,11 @@ GlowStep.prototype._onDrag = function(event) {
   }
 };
 
-GlowStep.prototype._onDragEnd = function(event) {
+GlowStep.prototype._onDragEnd = function (event) {
   if (this.initialized) {
     this.updatePosition();
   }
-}
+};
 
 GlowStep.prototype.steppedOn = function() {
   if (this.initialized && !this.options.shiftPressed == true) {
@@ -157,7 +161,7 @@ GlowStep.prototype.updateImaginedPosition = function(x,y) {
 function addAgent (name, implementation) {
   askAgent("http://" + computerAddress + ":3000/agents/admin",
     "addAgent",
-    {name:name, implementation:implementation},
+    {name:name, agentClass:implementation},
     function (data) {
       console.log("agent added:", data);
     },

@@ -28,27 +28,27 @@ function localizationModule(newAgent, EveSystem) {
    * This function sends a message to all its connected nodes to tell them its new position.
    * @private
    */
-  newAgent._updateConnectedNodes = function() {
+  newAgent._updateConnectedNodes = function () {
     for (var i = 0; i < this._connectedNodes.length; i++) {
       this.send(this._connectedNodes[i].id,
-        {method:"connectedToNode",
+        {method: "connectedToNode",
           params: {
-            id:this.agentName,
-            x:this._x,
-            y:this._y,
-            r:this._connectedNodes[i].r
+            id: this.agentName,
+            x: this._x,
+            y: this._y,
+            r: this._connectedNodes[i].r
           }
         }
-        ,null,null);
+        , null, null);
     }
-  }
+  };
 
   /**
    * This function is called if a node either wants to connect or update its connected node with new position.
    * @param params
    * @param callback
    */
-  newAgent.RPCfunctions.connectedToNode = function(params,callback) {
+  newAgent.RPCfunctions.connectedToNode = function (params) {
     var alreadyConnected = false;
     for (var i = 0; i < this._connectedNodes.length; i++) {
       if (this._connectedNodes[i].id == params.id) {
@@ -63,7 +63,7 @@ function localizationModule(newAgent, EveSystem) {
     }
     if (alreadyConnected == false) {
       this._connectedNodes.push({
-        id:params.id,
+        id: params.id,
         x: params.x,
         y: params.y,
         r: this._convertToDistance(params.r)
@@ -76,7 +76,7 @@ function localizationModule(newAgent, EveSystem) {
     else {
       this._calculateSpringForces();
     }
-  }
+  };
 
   /**
    * newAgent function can be used to convert RSSI values to linear distances
@@ -87,14 +87,14 @@ function localizationModule(newAgent, EveSystem) {
    */
   newAgent._convertToDistance = function (r) {
     return r;
-  }
+  };
 
   /**
    * This function calculates the forces exerted by each of its neighbours on it and takes a step.
    * Once the step is taken, the position is updated and is published to the rest of the agents.
    * @private
    */
-  newAgent._calculateSpringForces = function() {
+  newAgent._calculateSpringForces = function () {
     var edgeLength;
     var dx, dy, springForce, distance;
 
@@ -117,10 +117,12 @@ function localizationModule(newAgent, EveSystem) {
       dy = node.y - this._y;
       distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance == 0) {distance = 0.00001;}
+      if (distance == 0) {
+        distance = 0.00001;
+      }
 
       // the 1/distance is so the fx and fy can be calculated without sine or cosine.
-      springForce =  0.4 * (edgeLength - distance) / distance; //  0.5 == springconstant
+      springForce = 0.4 * (edgeLength - distance) / distance; //  0.5 == springconstant
 
       this._fx -= dx * springForce;
       this._fy -= dy * springForce;
@@ -128,16 +130,16 @@ function localizationModule(newAgent, EveSystem) {
 
     this._discreteStep();
     this._publishPosition();
-  }
+  };
 
 
   /**
    * This takes a discrete step with damping and a max velocity limitation
    * @private
    */
-  newAgent._discreteStep = function() {
+  newAgent._discreteStep = function () {
     var interval = 0.025;
-    var damping  = 0.8;
+    var damping = 0.8;
     var maxVelocity = 60;
 
     var dx, dy, ax, ay;
@@ -152,8 +154,8 @@ function localizationModule(newAgent, EveSystem) {
     ay = (this._fy - dy);                    // acceleration (mass at 1)
     this._vy += ay * interval;               // velocity
     this._vy = (Math.abs(this._vy) > maxVelocity) ? ((this._vy > 0) ? maxVelocity : -maxVelocity) : this._vy;
-    this._y  += this._vy * interval;         // position
-  }
+    this._y += this._vy * interval;         // position
+  };
 
 
   /**
@@ -161,8 +163,8 @@ function localizationModule(newAgent, EveSystem) {
    * @private
    */
   newAgent._publishPosition = function () {
-    this.publish("positionData",{name:this.agentName, x:this._x, y:this._y});
-  }
+    this.publish("positionData", {name: this.agentName, x: this._x, y: this._y});
+  };
 
   /**
    * This processes the updated IMAGINARY position data. Imaginary means the position the node thinks it is at.
@@ -170,10 +172,10 @@ function localizationModule(newAgent, EveSystem) {
    * @param data
    * @private
    */
-  newAgent._processPositionData = function(data) {
+  newAgent._processPositionData = function (data) {
     if (data.name != this.agentName) {
       var unknownAgent = true;
-      var distance = Math.sqrt(Math.pow(this._x-data.x,2) + Math.pow(this._y-data.y,2));
+      var distance = Math.sqrt(Math.pow(this._x - data.x, 2) + Math.pow(this._y - data.y, 2));
       for (var i = 0; i < this.agents.length; i++) {
         if (data.name == this.agents[i].name) {
           unknownAgent = false;
@@ -184,12 +186,14 @@ function localizationModule(newAgent, EveSystem) {
         }
       }
       if (unknownAgent == true) {
-        this.agents.push({name:data.name, x: data.x, y: data.y, r:distance});
+        this.agents.push({name: data.name, x: data.x, y: data.y, r: distance});
       }
     }
 
-    this.agents.sort(function(a,b) {return a.r - b.r;});
-  }
+    this.agents.sort(function (a, b) {
+      return a.r - b.r;
+    });
+  };
 
   return newAgent;
 }

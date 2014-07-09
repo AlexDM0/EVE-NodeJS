@@ -14,25 +14,25 @@ glowStep.init = function () {
 
   this.lightColor = "black";
   this.colors = [ "black",
-                  "white",
-                  "red",
-                  "orange",
-                  "yellow",
-                  "green",
-                  "cyan",
-                  "blue",
-                  "purple",
-                  "pink"
-                ]
+    "white",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "cyan",
+    "blue",
+    "purple",
+    "pink"
+  ];
   var mainLoopInterval = 1000;
   this.repeat(this.mainLoop, mainLoopInterval);
 };
 
-glowStep.mainLoop = function() {
+glowStep.mainLoop = function () {
   if (Date.now() - this.timeSinceChange > 2500) {
     this.lightColor = "black";
   }
-}
+};
 
 glowStep.sendToNeighbours = function(message,callback) {
   var thresholdDistance = this.agents[Math.round(0.25 * this.agents.length)].r;
@@ -61,9 +61,8 @@ glowStep.steppedOn = function() {
 glowStep.RPCfunctions.setColor = function (params, callback) {
   this.lightColor = params.color;
   this.timeSinceChange = Date.now();
-  callback({result:this.lightColor, error:0});
+  return this.lightColor;
 };
 
 
-var agentBase = require("./agentBases/simulationAgentBase.js");
-module.exports = agentBase(glowStep);
+module.exports = glowStep;

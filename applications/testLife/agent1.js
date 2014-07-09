@@ -2,12 +2,10 @@
  * Created by Alex on 4/24/14.
  */
 
-//var codein = require("node-codein");
-var Eve = require('evejs').eve;
+var Eve = require('evejs');
 
 var eveOptions = {
   transports: [
-//    {protocol: "p2p"}
     {
       protocol: "http",
       options: {
@@ -17,7 +15,7 @@ var eveOptions = {
     }
   ],
   agents: [
-    {agentClass: "./agents/agent1.js", name: "test"}
+    {agentClass: "./agents/test/agent1.js", name: "test"}
   ]
 };
 var eve = new Eve(eveOptions);

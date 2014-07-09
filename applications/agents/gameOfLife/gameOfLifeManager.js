@@ -14,22 +14,18 @@ gameOfLifeManager.init = function (eve) {
 };
 
 
-gameOfLifeManager.RPCfunctions.end = function(params,callback) {
-  callback({result:'ok', error:0});
+gameOfLifeManager.RPCfunctions.end = function () {
   this.finishedCount += 1;
   if (this.finishedCount == this.amountOfAgents) {
     var timeElapsed = new Date().getTime() - this.startTimer;
-    if ("http" in this.eve.transports) { // shutdown server
-      this.eve.sendCallCounter *= 2; // 1 http call is a json back and forth: 2 RPC
-    }
     console.log("Total time:", timeElapsed, "ms");
-    console.log("Transport Type:",this.eve.defaultTransport, " total amount of calls: ", this.eve.sendCallCounter);
-    console.log("calls per second: ", Math.round(this.eve.sendCallCounter/(0.001*timeElapsed)));
+    console.log("Transport Type:", this.eve.defaultTransport, " total amount of calls: ", this.eve.sendCallCounter);
+    console.log("calls per second: ", Math.round(this.eve.sendCallCounter / (0.001 * timeElapsed)));
     if ("http" in this.eve.transports) { // shutdown server
       this.eve.transports['http'].server.close();
     }
   }
-}
+};
 
 gameOfLifeManager.start = function () {
   this.startTimer = new Date().getTime();
@@ -42,5 +38,4 @@ gameOfLifeManager.start = function () {
 };
 
 
-var agentBase = require("./agentBase.js");
-module.exports = agentBase(gameOfLifeManager);
+module.exports = gameOfLifeManager;

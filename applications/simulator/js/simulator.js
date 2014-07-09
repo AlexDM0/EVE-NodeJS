@@ -5,16 +5,16 @@ var glowSteps = {};
 var computerAddress = "127.0.0.1";
 
 var options = {shiftPressed:false};
-this.onkeydown = function(evt){
+this.onkeydown = function (evt) {
   var evt2 = evt || window.event;
   var keyCode = evt2.keyCode || evt2.which;
-  if(keyCode==16) {
+  if (keyCode == 16) {
     options.shiftPressed = true;
   }
-}
-this.onkeyup = function(){
+};
+this.onkeyup = function () {
   options.shiftPressed = false;
-}
+};
 
 window.onload = function () {
 
@@ -26,7 +26,7 @@ window.onload = function () {
     edges: edgesData
   };
   var visOptions = {
-    edges:{color:{color:'white', highlight:'red'}},
+    edges: {color: {color: 'white', highlight: 'red'}},
     stabilize: false
   };
   var graph = new vis.Graph(visContainer, visData, visOptions);
@@ -39,6 +39,7 @@ window.onload = function () {
   var initializationDiv = document.getElementById("initializationDescription");
   var initializationButtonDiv = document.getElementById("controlButtons");
   var simulationDiv = document.getElementById("simulationDescription");
+  var agentPathInput = document.getElementById("agentPath");
 
   var containerDiv = document.getElementById("containerDiv");
   var controlDiv = document.getElementById("controlDiv");
@@ -48,7 +49,7 @@ window.onload = function () {
   var height = containerDiv.offsetHeight - stepSize;
 
 
-  buttonRandomly.onclick = function() {
+  buttonRandomly.onclick = function () {
     nodesData.clear();
     edgesData.clear();
     var numberOfSteps = numberOfStepsInput.value;
@@ -64,7 +65,7 @@ window.onload = function () {
       while (positionFound == false) {
         positionFound = true;
         for (var j = 0; j < positions.length; j++) {
-          if (Math.abs(left-positions[j].left) < stepSize && Math.abs(top-positions[j].top) < stepSize) {
+          if (Math.abs(left - positions[j].left) < stepSize && Math.abs(top - positions[j].top) < stepSize) {
             left = Math.random() * width;
             top = Math.random() * height;
             positionFound = false;
@@ -72,15 +73,17 @@ window.onload = function () {
           }
         }
       }
-      positions.push({left:left,top:top});
-      glowSteps['glowstep_' + i] = new GlowStep('glowstep_' + i, left, top, containerDiv, options, nodesData, edgesData);
+      positions.push({left: left, top: top});
+      var agentPath = agentPathInput.value;
+      alert(agentPath);
+      glowSteps['glowstep_' + i] = new GlowStep('glowstep_' + i, left, top, containerDiv, options, nodesData, edgesData, agentPath);
     }
     this.blur();
     buttonStartSimulation.disabled = false;
     graph.zoomExtent();
   }
 
-  buttonGrid.onclick = function() {
+  buttonGrid.onclick = function () {
     nodesData.clear();
     edgesData.clear();
     var numberOfSteps = numberOfStepsInput.value;
@@ -98,10 +101,10 @@ window.onload = function () {
 
     while (stepId < numberOfSteps) {
       for (var i = 0; i < horizontalCount; i++) {
-        var left = xSpacing * i + xSpacing*0.5;
-        var top = ySpacing * j + ySpacing*0.5 - 0.5*stepSize;
-
-        glowSteps['glowstep_' + stepId] = new GlowStep('glowstep_' + stepId, left, top, containerDiv, options, nodesData, edgesData);
+        var left = xSpacing * i + xSpacing * 0.5;
+        var top = ySpacing * j + ySpacing * 0.5 - 0.5 * stepSize;
+        var agentPath = agentPathInput.value;
+        glowSteps['glowstep_' + stepId] = new GlowStep('glowstep_' + stepId, left, top, containerDiv, options, nodesData, edgesData, agentPath);
         stepId += 1;
         if (stepId >= numberOfSteps) {
           break;
@@ -114,7 +117,7 @@ window.onload = function () {
     graph.zoomExtent();
   }
 
-  buttonStartSimulation.onclick = function() {
+  buttonStartSimulation.onclick = function () {
     askAgent("http://" + computerAddress + ":3000/agents/admin",
       "removeAgents",
       null,
@@ -132,8 +135,9 @@ window.onload = function () {
               if (glowSteps.hasOwnProperty(nodeId)) {
                 glowSteps[nodeId].getConnections();
               }
-            };
-            setInterval(function() {
+            }
+            ;
+            setInterval(function () {
               askAgent("http://" + computerAddress + ":3000/agents/admin",
                 "getStates",
                 null,
@@ -145,7 +149,7 @@ window.onload = function () {
                     }
                   }
                 });
-              },100);
+            }, 100);
             initializationButtonDiv.style.display = "none";
             initializationDiv.style.display = "none";
             simulationDiv.style.display = "block";
@@ -156,10 +160,4 @@ window.onload = function () {
   }
 
 
-
-
-
-
-
-
-}
+};

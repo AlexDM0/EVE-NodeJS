@@ -21,18 +21,19 @@ function askAgent(url,method,params,callback, async) {
   var http = new XMLHttpRequest();
 
   // insert the callback function. This is called when the message has been delivered and a response has been received
-  http.onreadystatechange = function() {
-    if(http.readyState == 4 && http.status == 200) {
-      if (callback === undefined || callback === null) {}
+  http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+      if (callback === undefined || callback === null) {
+      }
       else {
         // launch callback function
         callback(JSON.parse(http.responseText));
       }
     }
-    else if (http.readyState == 4 && http.status != 200 ) {
+    else if (http.readyState == 4 && http.status != 200) {
       console.log("Make sure that the Node server has started.");
     }
-  }
+  };
 
   // open an asynchronous POST connection
   http.open("POST", url, async);
