@@ -17,20 +17,12 @@ module.exports = pubSub;
  */
 function pubSub(newAgent, EveSystem) {
 
-  if (EveSystem.transports['p2p'] === undefined) {
-    EveSystem.addTransport.call(EveSystem, {protocol:"p2p"});
-  }
+  newAgent.topics = [];
 
   newAgent.publish = function (topic, data) {
     // create publish portal agent
     if (EveSystem.agents["_publishPortal"] === undefined) {
       var agent = {agentClass:"_publishPortal", name:"_publishPortal"};
-      EveSystem.addAgent(agent, true);
-    }
-
-    // create topic agent
-    if (EveSystem.agents["_topicAgent_" + topic] === undefined) {
-      var agent = {agentClass:"_topicAgent", name:"_topicAgent_" + topic, options: {topic:topic}};
       EveSystem.addAgent(agent, true);
     }
 
@@ -46,6 +38,11 @@ function pubSub(newAgent, EveSystem) {
       EveSystem.addAgent(agent, true);
     }
 
+    // add to list of subscribed topics
+    if (this.topics.indexOf(topic) == -1) {
+      this.topics.push(topic);
+    }
+
     var messageContent = {method:"subscribe", params:{callback: callback}, id:0};
     this.send("p2p://_topicAgent_" + topic, messageContent, null);
   };
@@ -57,14 +54,23 @@ function pubSub(newAgent, EveSystem) {
       var messageContent = {method:"unsubscribe", params:{callback: callback}, id:0};
       this.send("p2p://_topicAgent_" + topic, messageContent, null);
     }
+
+    // remove from list of subscribed topics
+    if (this.topics.indexOf(topic) != -1) {
+      this.topics.splice(this.topics.indexOf(topic),1);
+    }
   };
 
   // unsubscribe from all topics.
   newAgent.unsubscribeAll = function() {
-    if (EveSystem.agents["_topicAgent_" + topic] !== undefined) {
-      var messageContent = {method:"unsubscribe", params:{callback: null}, id:0};
-      this.send("p2p://_topicAgent_" + topic, messageContent, null);
+    for (var i = 0; i < this.topics.length; i++) {
+      var topic = this.topics[i];
+      if (EveSystem.agents["_topicAgent_" + topic] !== undefined) {
+        var messageContent = {method:"unsubscribe", params:{callback: null}, id:0};
+        this.send("p2p://_topicAgent_" + topic, messageContent, null);
+      }
     }
+    this.topics = [];
   };
 
   return newAgent;

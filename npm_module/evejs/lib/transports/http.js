@@ -8,18 +8,25 @@ var http = require('http');
  *
  * Supported Options:
  *
- * {Number} options.port | Port to listen on.
- * {String} options.path | Path, with or without leading and trailing slash (/)
+ * {Number}  options.port | Port to listen on.
+ * {String}  options.path | Path, with or without leading and trailing slash (/)
+ * {Boolean} options.p2pIfAvailable | if the agentId exists locally, use local transport. (p2p)
  *
  * Address: http://127.0.0.1:PORTNUMBER/PATH
  */
 var HTTPImplementation = {
 
-  // required init function
+  /**
+   * required init function
+   * @param {Object} options
+   * @param {Eve}    eve
+   */
   init : function(options, eve) {
     this.eve = eve;
     this.port = options.port || 3000;
     this.path = options.path || "agents/";
+    this.p2pIfAvailable = options.p2pIfAvailable || false;
+
     if (this.path.slice(-1) != "/") {this.path += "/";}
     if (this.path[0] != "/")        {this.path = "/" + this.path;}
 
@@ -36,10 +43,18 @@ var HTTPImplementation = {
    */
   sendMessage : function(receiverAddress, message, senderId) {
     var agentId = this.getAgentId(receiverAddress);
+    // send over p2p if possible
+    if (this.eve.agents[agentId] !== undefined && this.p2pIfAvailable == true) {
+      this.eve.sendMessage("p2p://" + agentId, message, senderId, null);
+      return;
+    }
+
+    // configure host
     var host = receiverAddress.substr(7);
     var portIndex = host.indexOf(":");
     host = host.substr(0,portIndex);
 
+    // all post options
     var options = {
       host: host,
       port: this.port,
@@ -127,7 +142,10 @@ var HTTPImplementation = {
     headers["Content-Type"] = 'application/json';
     if (url.substr(0,pathLength) == this.path) {
       var agentId = url.substr(pathLength);
-      var senderId = this.getAgentId(request.headers['x-eve-senderurl']);
+      var senderId = "unknown";
+      if (request.headers['x-eve-senderurl'] !== undefined) {
+        senderId = this.getAgentId(request.headers['x-eve-senderurl']);
+      }
       var body = "";
       var me = this;
       request.on('data', function (data) {

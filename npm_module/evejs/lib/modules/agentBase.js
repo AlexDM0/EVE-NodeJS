@@ -23,16 +23,16 @@ function AgentBase(agentImplementation) {
     newAgent.options = options;
     newAgent.repeatIds = [];
 
-    // send a message to agent: destination, message is JSON RPC object, callback is fired on callback, message ID used to identify callback.
-//    message structure = {
-//      address: transportPrefix + agentId,
-//      origin: transportPrefix + agentId,
-//      content: {
-//        id: ###,
-//        method: "functionName",
-//        params: {}
-//      }
-//    }
+    // send a message to agent: destination, message is JSON-RPC object, callback is fired on callback, message ID used to identify callback.
+    //    message structure = {
+    //      address: transportPrefix + agentId,
+    //      origin:  transportPrefix + agentId,
+    //      content: {
+    //        id: ###,
+    //        method: "functionName",
+    //        params: {}
+    //      }
+    //    }
     newAgent.send = function (destination, message, callback, messageId) {
       if (messageId === undefined) {message["id"] = util.getUID();}
       else                         {message['id'] = messageId;}
@@ -76,6 +76,19 @@ function AgentBase(agentImplementation) {
         i--;
       }
     };
+
+    // delete agent
+    newAgent.die = function() {
+      EveSystem.removeAgent(this.agentName);
+    }
+
+    // warnings
+    newAgent.publish = function() {
+      console.log("No publish/subscribe module has been loaded.")
+    }
+    newAgent.subscribe = function() {
+      console.log("No publish/subscribe module has been loaded.")
+    }
 
     // initialize the agent.
     return newAgent;

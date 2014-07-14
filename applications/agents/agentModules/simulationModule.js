@@ -88,5 +88,9 @@ function simulationModule(newAgent, EveSystem) {
     }
   };
 
+  newAgent.getTime = function() {
+    return new Date();
+  }
+
   return this;
 }

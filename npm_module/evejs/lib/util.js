@@ -1,16 +1,21 @@
 
-var util = {};
 
 /**
  * Create a semi UUID
  * 9e17 is close to max of var
  * @return {String} uuid
  */
-util.getUID = function () {
+exports.getUID = function () {
   return Math.floor(Math.random() * 9e17).toString(36);
 };
 
-util.getType = function (object) {
+
+/**
+ * Get the type of something
+ * @param object
+ * @returns {string}
+ */
+exports.getType = function (object) {
   if (object === null) {
     return "null";
   }
@@ -30,5 +35,3 @@ util.getType = function (object) {
     return "don't know";
   }
 };
-
-module.exports = util;

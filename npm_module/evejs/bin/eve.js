@@ -8,6 +8,8 @@ var agentBase = require("../lib/modules/agentBase.js");
 /**
  *  Eve handles the composition of messages, routing, delivering and implementing callbacks.
  *  p2p and http protocols are supported.
+ *
+ *  The p2p is loaded by default since some internal processes use this layer. (http over p2p when available, pubsub.. etc)
  *  @param {object} options |-{Array of objects}  options.transports
  *                            |_ {protocol: "protocolName"[, options: {transportSpecificOptions}]}
  *                          |-{Array of objects}  options.agents
@@ -17,21 +19,29 @@ var agentBase = require("../lib/modules/agentBase.js");
  */
 function Eve(options) {
   this.agents = {};
-  this.topics = {};
   this.callbacks = {};
   this.callbackTimeout = 1000; // ms
   this.transports = {};
   this.agentModules = options.agentModules;
   this.sendCallCounter = 0; // debug
 
-  // the first transport is the default one.
-  this.defaultTransport = options.transports[0].protocol;
-
   // load the required transports and add them to Eve
   if (options.hasOwnProperty("transports")) {
     for (var i = 0; i < options.transports.length; i++) {
       this.addTransport(options.transports[i]);
     }
+  }
+  // always load the pear 2 pear protocol
+  if (this.transports['p2p'] === undefined) {
+    this.addTransport({protocol:"p2p"});
+  }
+
+  // set the default protocol
+  if (options.transports.length > 0) {
+    this.defaultTransport = options.transports[0].protocol; // the first transport is the default one.
+  }
+  else {
+    this.defaultTransport = "p2p";
   }
 
   // add agents
@@ -83,10 +93,10 @@ Eve.prototype.addAgent = function(agentDescription, noModules) {
     console.log("ERROR: ", agentName, " already exists!");
   }
   else {
-    this.callbacks[agentName] = {};
     var agentClass = this.requireFromPaths("../../../", "../lib/agents/", agentImplementation);
     var agent = agentBase(agentClass);
     this.agents[agentName] = agent(agentName,options, this);
+    this.callbacks[agentName] = {};
 
     if (this.agentModules !== undefined && noModules != true) {
       for (var i = 0; i < this.agentModules.length; i++) {
@@ -116,7 +126,7 @@ Eve.prototype.requireFromPaths = function(path1, path2, filename) {
     }
   }
   return required;
-}
+};
 
 /**
  * Remove an agent specified with the agentId.
@@ -125,7 +135,6 @@ Eve.prototype.requireFromPaths = function(path1, path2, filename) {
  */
 Eve.prototype.removeAgent = function(agentName) {
   this.agents[agentName].stopRepeatingAll();
-  this.unsubscribeAgent(agentName,null,null);
   delete this.callbacks[agentName];
   delete this.agents[agentName];
   console.log(agentName, "deleted.");
@@ -183,10 +192,10 @@ Eve.prototype.deliverReply = function (reply, agentId) {
  * If there is no prefix (as denoted as everything before ://), the default transport is used.
  * It also adds a callback (if it is supplied) to listen for a reply on this message.
  *
- * @param address  | with or without prefix
- * @param message  | json RPC
- * @param senderId | without prefix
- * @param callback | function, null or undefined
+ * @param {String} address            | with or without prefix
+ * @param {Object} message            | JSON-RPC
+ * @param {String} senderId           | without prefix
+ * @param {function, null} [callback] | function, null or undefined
  */
 Eve.prototype.sendMessage = function(address, message, senderId, callback) {
   this.sendCallCounter += 1;

@@ -2,7 +2,8 @@
   "name": "evejs",
   "author": "Alex de Mulder <alex almende org>",
   "description": "NodeJS platform for Eve agents",
-  "version": "0.1.0",
+  "version": "0.2.1",
+  "repository": "https://github.com/AlexDM0/EVE-NodeJS",
   "dependencies": {},
   "engines": {
     "node": "0.10.x"

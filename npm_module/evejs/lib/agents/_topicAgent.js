@@ -2,8 +2,19 @@
  * Created by Alex on 4/24/14.
  */
 
+/**
+ * This agent is instantiated upon a subscription or a publish.
+ * It keeps a list of subscribers and kills itself if there are no more subscribers.
+ * The subscribers supply callbacks which are then called from this agent and applied to the
+ * subscriber.
+ * @type {{RPCfunctions: {}}}
+ */
 var topicAgent = {RPCfunctions: {}};
 
+/**
+ * required init
+ * @param Eve
+ */
 topicAgent.init = function (Eve) {
   this.topic = this.options.topic;
   this.subscribers = {};
@@ -11,6 +22,10 @@ topicAgent.init = function (Eve) {
   this.eve = Eve;
 };
 
+/**
+ * published messages to this topic arrive here.
+ * @param params
+ */
 topicAgent.RPCfunctions.incoming = function (params) {
   var data = params.data;
   for (var agentId in this.subscribers) {
@@ -26,6 +41,11 @@ topicAgent.RPCfunctions.incoming = function (params) {
   }
 };
 
+/**
+ * register a callback to the agentId
+ * @param params
+ * @param agentId
+ */
 topicAgent.RPCfunctions.subscribe = function (params, agentId) {
   var callback = params.callback;
   this.subscriberCount += 1;
@@ -35,6 +55,12 @@ topicAgent.RPCfunctions.subscribe = function (params, agentId) {
   this.subscribers[agentId].push(callback);
 };
 
+/**
+ * remove callback from the agent's subscription. If there are no more subscriptions, remove agent from list.
+ * If there are no more subscribers, kill topic agent.
+ * @param params
+ * @param agentId
+ */
 topicAgent.RPCfunctions.unsubscribe = function (params, agentId) {
   var callback = params.callback;
   if (this.subscribers[agentId] !== undefined) {
@@ -52,6 +78,9 @@ topicAgent.RPCfunctions.unsubscribe = function (params, agentId) {
         }
       }
     }
+  }
+  if (this.subscriberCount == 0) {
+    this.die();
   }
 };
 

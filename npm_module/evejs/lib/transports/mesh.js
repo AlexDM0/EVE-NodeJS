@@ -2,7 +2,7 @@
  * Created by Alex on 4/24/14.
  */
 
-  // this is currenlty the same as the p2p
+// prototype, non functional
 var MeshImplementation = {
 
   // required init function

@@ -6,13 +6,13 @@ var Eve = require('evejs');
 
 var eveOptions = {
   transports: [
-    {
-      protocol: "http",
-      options: {
-        port: 3000,
-        path: "agents/"
-      }
-    }
+//    {
+//      protocol: "http",
+//      options: {
+//        port: 3000,
+//        path: "agents/"
+//      }
+//    }
   ],
   agents: [
     {agentClass: "./agents/test/agent1.js", name: "test"}
