@@ -22,6 +22,7 @@ function AgentBase(agentImplementation) {
     newAgent.agentName = String(agentName);
     newAgent.options = options;
     newAgent.repeatIds = [];
+    newAgent.scheduleIds = [];
 
     // send a message to agent: destination, message is JSON-RPC object, callback is fired on callback, message ID used to identify callback.
     //    message structure = {
@@ -46,9 +47,24 @@ function AgentBase(agentImplementation) {
         setTimeout(callback.apply(newAgent),0);
       }
       else {
-        setTimeout(function() { callback.apply(newAgent); }, time);
+        var id = setTimeout(function() {
+          callback.apply(newAgent)
+          this.scheduleIds.splice(this.scheduleIds.indexOf(id), 1);
+        }, time);
+        this.scheduleIds.push(id);
       }
     };
+
+    newAgent.clearSchedule = function(id) {
+      if (id === undefined) {
+        for (var i = 0; i < this.scheduleIds.length; i++) {
+          cleartimeout(this.scheduleIds[i]);
+        }
+      }
+      else {
+        cleartimeout(id);
+      }
+    }
 
     // repeat a function. If this function has arguments, wrap it in an anonymous function!
     newAgent.repeat = function(callback, time) {
@@ -65,7 +81,7 @@ function AgentBase(agentImplementation) {
     // stop repeating a certain repeat
     newAgent.stopRepeating = function (id) {
       clearInterval(id);
-      newAgent.repeatIds.splice(newAgent.repeatIds.indexOf(id), 1);
+      this.repeatIds.splice(this.repeatIds.indexOf(id), 1);
     };
 
     // stop repeating all repeating functions
