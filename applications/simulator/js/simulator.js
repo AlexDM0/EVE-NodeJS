@@ -75,7 +75,6 @@ window.onload = function () {
       }
       positions.push({left: left, top: top});
       var agentPath = agentPathInput.value;
-      alert(agentPath);
       glowSteps['glowstep_' + i] = new GlowStep('glowstep_' + i, left, top, containerDiv, options, nodesData, edgesData, agentPath);
     }
     this.blur();
@@ -144,8 +143,10 @@ window.onload = function () {
                 function (data) {
                   for (var stepId in data.result) {
                     if (data.result.hasOwnProperty(stepId)) {
-                      glowSteps[stepId].changeColor(data.result[stepId].color);
-                      glowSteps[stepId].updateImaginedPosition(data.result[stepId].x, data.result[stepId].y);
+                      if (glowSteps[stepId] !== undefined) {
+                        glowSteps[stepId].changeColor(data.result[stepId].color);
+                        glowSteps[stepId].updateImaginedPosition(data.result[stepId].x, data.result[stepId].y);
+                      }
                     }
                   }
                 });

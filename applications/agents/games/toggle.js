@@ -56,13 +56,43 @@ glowStep.steppedOn = function() {
     this.currentColor = "red";
     this.changeTime = this.getTime();
   }
+   this.sendToNeighbours();
+
 };
 
+
+glowStep.RPCfunctions.fakeSteppedOn = function() {
+  if (this.currentColor == "red") {
+    this.setColor(0,255,0);
+    this.currentColor = "green";
+    this.changeTime = this.getTime();
+  }
+  else if (this.currentColor == "green") {
+    this.setColor(0,0,255);
+    this.currentColor = "blue";
+    this.changeTime = this.getTime();
+  }
+  else { // blue or off
+    this.setColor(255,0,0);
+    this.currentColor = "red";
+    this.changeTime = this.getTime();
+  }
+}
 // mandatory function
 glowStep.steppedOff = function () {
 
 };
 
+
+
+glowStep.sendToNeighbours = function() {
+  for (var i = 0; i < this.agents.length; i++) {
+    if (i > 5) {
+      break;
+    }
+    this.send(this.agents[i].name, {method:"fakeSteppedOn", params: {}});
+  }
+}
 
 
 module.exports = glowStep;

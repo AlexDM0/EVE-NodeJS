@@ -49,7 +49,7 @@ agentImplementation.RPCfunctions.getStates = function () {
 agentImplementation.RPCfunctions.connectNodes = function () {
   var agents = [];
   for (var agentId in this.eve.agents) {
-    if (agentId != "admin") {
+    if (agentId != "admin" && agentId[0] != "_") {
       agents.push(agentId);
     }
   }
@@ -87,10 +87,10 @@ agentImplementation.RPCfunctions.connectNodes = function () {
         r: noiseDistance
       }, null);
       connected += 1;
-      console.log("agent:", agent.agentName, " is connected to: ", agent2.agentName);
+//      console.log("agent:", agent.agentName, " is connected to: ", agent2.agentName);
       connectedAgents.push(agent2Id);
     }
-    agent.repeat(agent._updateConnectedNodes, 250);
+    agent.repeat(agent._updateConnectedNodes, 50);
   }
 
 

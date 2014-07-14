@@ -16,6 +16,7 @@ function simulationModule(newAgent, EveSystem) {
   newAgent.x = 0;
   newAgent.y = 0;
 
+
   /**
    * This function can be called by the simulator if a user moves a node.
    *
@@ -27,6 +28,10 @@ function simulationModule(newAgent, EveSystem) {
     this.y = params.y;
     if (params.initialSetup != true) {
       this._publishRealPosition();
+    }
+    else {
+      this.subscribe("realPositionData",this._processRealPositionData);
+      this.subscribe("positionData",this._processPositionData);
     }
     return "message received";
   };
@@ -66,7 +71,6 @@ function simulationModule(newAgent, EveSystem) {
       for (var i = 0; i < this._connectedNodes.length; i++) {
         if (this._connectedNodes[i].id == data.name) {
           this._connectedNodes[i].r = noiseDistance;
-          console.log("updated DISTANCE")
           alreadyConnected = true;
           break;
         }

@@ -136,8 +136,8 @@ GlowStep.prototype._onDrag = function(event) {
 };
 
 GlowStep.prototype._onDragEnd = function (event) {
-  if (this.initialized) {
-    this.updatePosition();
+  if (this.initialized == true) {
+    this.updatePosition(false);
   }
 };
 
@@ -151,6 +151,7 @@ GlowStep.prototype.steppedOn = function() {
 };
 
 GlowStep.prototype.updatePosition = function(initialSetup) {
+  console.log(" updating pos")
   askAgent(this.url, "setPosition", {x:this.x, y:this.y, initialSetup:initialSetup}, null, false);
 };
 
