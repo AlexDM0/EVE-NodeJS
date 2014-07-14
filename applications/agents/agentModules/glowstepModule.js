@@ -24,5 +24,9 @@ function glowstepModule(newAgent, EveSystem) {
     this.lightColor = r + ',' + g + ',' + b;
   };
 
+
+  this.init = function() {}
+  this.init.apply(newAgent);
+
   return newAgent;
 }

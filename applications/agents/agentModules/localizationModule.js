@@ -195,6 +195,11 @@ function localizationModule(newAgent, EveSystem) {
     });
   };
 
+
+  // init, function will be executed as if it was in the agent. It will not be stored in the agent.
+  this.init = function() {}
+  this.init.apply(newAgent);
+
   return newAgent;
 }
 

@@ -29,10 +29,6 @@ function simulationModule(newAgent, EveSystem) {
     if (params.initialSetup != true) {
       this._publishRealPosition();
     }
-    else {
-      this.subscribe("realPositionData",this._processRealPositionData);
-      this.subscribe("positionData",this._processPositionData);
-    }
     return "message received";
   };
 
@@ -96,5 +92,13 @@ function simulationModule(newAgent, EveSystem) {
     return new Date();
   }
 
-  return this;
+
+  // init, function will be executed as if it was in the agent. It will not be stored in the agent.
+  this.init = function() {
+    this.subscribe("realPositionData",this._processRealPositionData);
+    this.subscribe("positionData",this._processPositionData);
+  }
+  this.init.apply(newAgent);
+
+  return newAgent;
 }

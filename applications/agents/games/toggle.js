@@ -29,15 +29,7 @@ glowStep.init = function () {
   this.currentColor = "off";
   this.changeTime = this.getTime();
   this.timeoutThreshold = 1000;
-  this.repeat(this.mainLoop,100);
 };
-
-glowStep.mainLoop = function () {
-  if (this.getTime() - this.changeTime > this.timeoutThreshold) {
-    this.setColor(0,0,0);
-    this.currentColor = "off";
-  }
-}
 
 // mandatory function
 glowStep.steppedOn = function() {
