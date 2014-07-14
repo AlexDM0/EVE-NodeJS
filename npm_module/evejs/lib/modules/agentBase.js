@@ -49,7 +49,7 @@ function AgentBase(agentImplementation) {
       else {
         var id = setTimeout(function() {
           callback.apply(newAgent)
-          this.scheduleIds.splice(this.scheduleIds.indexOf(id), 1);
+          newAgent.scheduleIds.splice(newAgent.scheduleIds.indexOf(id), 1);
         }, time);
         this.scheduleIds.push(id);
       }
