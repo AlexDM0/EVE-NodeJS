@@ -31,7 +31,7 @@ function Eve(options) {
       this.addTransport(options.transports[i]);
     }
   }
-  // always load the pear 2 pear protocol
+  // always load the peer 2 peer protocol
   if (this.transports['p2p'] === undefined) {
     this.addTransport({protocol:"p2p"});
   }

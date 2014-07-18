@@ -2,6 +2,8 @@
  * Created by Alex on 4/24/14.
  */
 
+module.exports = agentImplementation;
+
 /****
  * Agent code below here:
  */
@@ -17,7 +19,7 @@ agentImplementation.init = function () {
 };
 
 
-agentImplementation.RPCfunctions.add = function (params, callback) {
+agentImplementation.RPCfunctions.add = function (params) {
   return params.a + params.b;
 };
 
@@ -25,8 +27,7 @@ agentImplementation.RPCfunctions.add = function (params, callback) {
 agentImplementation.sendMessageToSelf = function () {
   this.send(this.agentName, {method: "add", params: {a: 71, b: 12} },
     function (answer) {
-      console.log('I have the answer (', this.agentName, ')', answer.result, answer.error, answer.id, answer);
+      console.log('I have the answer (', this.agentName, ')', answer.result, answer.error, answer.id);
     });
 };
 
-module.exports = agentImplementation;

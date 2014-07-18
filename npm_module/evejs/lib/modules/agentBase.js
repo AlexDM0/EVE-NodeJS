@@ -48,23 +48,31 @@ function AgentBase(agentImplementation) {
       }
       else {
         var id = setTimeout(function() {
-          callback.apply(newAgent)
+          callback.apply(newAgent);
           newAgent.scheduleIds.splice(newAgent.scheduleIds.indexOf(id), 1);
         }, time);
         this.scheduleIds.push(id);
+        return id;
       }
     };
 
     newAgent.clearSchedule = function(id) {
       if (id === undefined) {
         for (var i = 0; i < this.scheduleIds.length; i++) {
-          cleartimeout(this.scheduleIds[i]);
+          clearTimeout(this.scheduleIds[i]);
         }
       }
       else {
-        cleartimeout(id);
+        clearTimeout(id);
       }
     }
+
+    newAgent.clearAllSchedules = function() {
+      for (var i = 0; i < this.scheduleIds.length; i++) {
+        clearTimeout(this.scheduleIds[i]);
+      }
+    }
+
 
     // repeat a function. If this function has arguments, wrap it in an anonymous function!
     newAgent.repeat = function(callback, time) {

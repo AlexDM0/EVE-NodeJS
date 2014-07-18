@@ -1,3 +1,3 @@
 cls
-node --prof life
+node --prof gameOfLife
 node-tick-processor

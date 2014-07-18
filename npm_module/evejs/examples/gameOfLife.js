@@ -2,47 +2,25 @@
  * Created by Alex on 4/24/14.
  */
 var Eve = require('evejs');
-//
-//agent1 = "0";
-//
-//var eveOptions = {
-//  transports: [
-//    {protocol: "http"}
-//  ]
-//  ,
-//  agents: [
-//    {agentClass: "./agents/agent1.js", name: agent1}
-//  ]
-//};
-//
-//var myEve = new Eve(eveOptions);
-
 
 var gridWidth = 10;
 var gridHeight = gridWidth;
 var maxCycles = 10;
 var gameOfLifeAgents = [];
-//var states =
-//  "-----" +
-//  "-----" +
-//  "-+++-" +
-//  "-----" +
-//  "-----";
-var states = "";
 for (var i = 0; i < gridWidth*gridHeight; i++) {
   var state = '-';
   if (Math.random() < 0.2) {
     state = '+';
   }
   gameOfLifeAgents.push({
-    agentClass: './agents/gameOfLife/gameOfLifeAgent',
+    agentClass: 'gameOfLifeAgent',
     name: "Agent_" + i,
-    options:{width:gridWidth, height:gridHeight, alive:states[i] || state, maxCycles:maxCycles}
+    options:{width:gridWidth, height:gridHeight, alive: state, maxCycles:maxCycles}
   })
 }
 
 gameOfLifeAgents.push({
-  agentClass: './agents/gameOfLife/gameOfLifeManager',
+  agentClass: 'gameOfLifeManager',
   name: "manager",
   options: {width: gridWidth, height: gridHeight}
 });
@@ -50,7 +28,6 @@ gameOfLifeAgents.push({
 
 var eveOptions = {
   transports: [
-    {protocol: "p2p"},
 //    {protocol: "http",options: {port: 3000,path: "agents/"}}
   ]
   ,

@@ -3,7 +3,7 @@
  */
 
 //var codein = require("node-codein");
-var Eve = require('evejs');
+var Eve = require('Evejs');
 
 var eveOptions = {
   transports: [
