@@ -2,7 +2,7 @@
  * This is an example agent.
  * It calls it's own method once and publishes a message to itself.
  *
- * It uses it's default transport by not specifying a transport type (ie. p2p://, http://)
+ * It uses it's default transport by not specifying a transport type (ie. local://, http://)
  */
 
 var mathAgent = {RPCfunctions: {}};

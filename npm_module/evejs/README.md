@@ -3,9 +3,19 @@ EveJS
 
 ### Introduction
 
-Eve has a library available in JavaScript, running on Node.js. This library provides a ready-made Node.js server and some example agents. Node.js runs Javascript, which is a very natural language to handle JSON-RPC messages, as JSON is a subset of the Javascript language.
+Eve is a multipurpose, web-based agent platform. Eve envisions to be an open and dynamic environment where agents can live and act anywhere: in the cloud, on smartphones, on desktops, in browsers, robots, home automation devices, and others. The agents communicate with each other using simple, existing protocols (JSON-RPC) over existing transport layers, offering a language and platform agnostic solution. 
+
+Eve has a library available in JavaScript, running on Node.js. This library provides a ready-made Node.js server and some example agents. Node.js runs JavaScript, which is a very natural language to handle JSON-RPC messages, as JSON is a subset of the JavaScript language.
 
 Eve for nodeJS is available as an npm package called *evejs*.
+
+---
+
+### How to install
+You can install EveJS for Node.js from npm:
+```
+npm install evejs
+```
 
 ---
 
@@ -40,7 +50,7 @@ The path of the agentClass is relative to the root of your project. That means t
 ####EveJS options:
  name | type | description
 :--------|:-----|:-----------
-transports|Array|Each object given to the transport array has to consist of a field called ```protocol```. This also needs to be present in the address as ```protocol://AgentName```. If a protocol is not defined in the address when sending a message, the message is automatically sent over the default transport. The default transport is p2p or the first transport defined: eveOptions.transports[0]. 
+transports|Array|Each object given to the transport array has to consist of a field called ```protocol```. This also needs to be present in the address as ```protocol://AgentName```. If a protocol is not defined in the address when sending a message, the message is automatically sent over the default transport. The default transport is local or the first transport defined: eveOptions.transports[0]. 
 agents|Array|Each agent object given to the agents array has to contain the fields ```agentClass```, which is a path to where the agent's javascript module can be found and ```name```, the name of the agent as Eve will identify it.
 [agentModules]|Array|Optionally, agents can be extended with agentModules. Some modules, like ```publishSubscribe```, are provided by EveJS. Others can be created by the user. These modules extend the default built-in methods the agents can use.
 
@@ -49,22 +59,22 @@ agents|Array|Each agent object given to the agents array has to contain the fiel
 ### Transports
 EveJS currently supports two transport layers. These are stand-alone and determined by the address to which the message is sent.
 
-- **p2p** - Peer 2 Peer, or local transport is loaded by default for sending messages within the same Eve instance.
+- **local** - Local transport is loaded by default for sending messages within the same Eve instance.
 
 ```
-options = {}; // the p2p transport layer has no options
+options = {}; // the local transport layer has no options
 
-example: "p2p://agentName"
+example: "local://agentName"
 ```
 
 - **http** - When http is selected, EveJS automatically creates a native Nodejs server to listen on a pre-/userdefined port. EveJS can be
-configured to send a message over the p2p transport if the agent is detected on the same instance to increase performance.
+configured to send a message over the local transport if the agent is detected on the same instance to increase performance.
 
 ```
 options: {
     port: 3000,
     path: myAgents,
-    p2pIfAvailable: false
+    localShortcut: false
 };
 
 example: "http://127.0.0.1:3000/myAgents/agentName"
@@ -74,17 +84,17 @@ option | type | default | description
 :--------|:-----|:--------|:-----------
 port|Number|3000|The port EveJS will listen on
 path|String|agents|The path after localhost (or 127.0.0.1)
-p2pIfAvailable|Boolean|false|When true, send message over p2p if possible
+localShortcut|Boolean|false|When true, send message over local if possible
 
 
-- **default** - The first transport protocol that is given in the options will be the default transport protocol. If no transport protocol is defined in the options, the p2p protocol will be the default.
+- **default** - The first transport protocol that is given in the options will be the default transport protocol. If no transport protocol is defined in the options, the local protocol will be the default.
 
 ```
 example: "agentName" 
 ```
 ---
 ### JSON-RPC message structure
-Both the p2p and http transport layers employ the JSON-RPC protocol. The messages in the JSON-RPC protocol are defined as shown below. The function name is the function the receiving agent will perform. Only functions in the this.RPCfunctions object of the agent can be called by other agents. 
+Both the local and http transport layers employ the JSON-RPC protocol. The messages in the JSON-RPC protocol are defined as shown below. The function name is the function the receiving agent will perform. Only functions in the this.RPCfunctions object of the agent can be called by other agents. 
 
 ```
 var message = {
@@ -117,7 +127,7 @@ die | |  | Remove the agent.
 #### Usage examples
 ```
 this.send(
-        "p2p://agentName",                      // address
+        "local://agentName",                      // address
         {method:"add",params:{a:49, b:23}},     // message
         function(reply) {                       // callback
             console.log(reply.result);
@@ -125,7 +135,7 @@ this.send(
 );
 
 var sID = this.schedule(
-            function () {console.log("do this over 5 minutes");},   // function to perform after the timeout
+            function () {console.log("do this in 5 minutes");},   // function to perform after the timeout
             5*60*1000                                               // timeout in milliseconds
 );
 
@@ -156,7 +166,7 @@ function myAgentModule(newAgent, EveSystem) {
     
     newAgent.talkToFrank = function() {
         // this is the "this" of the agent
-        this.send("p2p://frank",{method:"helloFrank",params:{weather:"beautiful", x: this.x}});
+        this.send("local://frank",{method:"helloFrank",params:{weather:"beautiful", x: this.x}});
     };
 
     return newAgent;

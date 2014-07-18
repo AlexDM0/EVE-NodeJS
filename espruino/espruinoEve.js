@@ -173,12 +173,12 @@ function AgentBase(agentImplementation) {
 
 
 
-var P2PImplementation = {
+var localImplementation = {
 
   // required init function
   init : function(options, eve) {
     this.eve = eve;
-    this.prefix = "p2p://";
+    this.prefix = "local://";
   },
 
   getAgentId : function(address) {
@@ -258,7 +258,7 @@ Eve.prototype.addTransport = function(transport) {
 
   this.transports[transport.protocol] = {};
   console.log("Implementing transport protocol:", transport.protocol);
-  var implementation = P2PImplementation;
+  var implementation = localImplementation;
   for (var fn in implementation) {
     if (implementation.hasOwnProperty(fn)) {
       this.transports[transport.protocol][fn] = implementation[fn];
@@ -508,7 +508,7 @@ Eve.prototype.unsubscribeAgent = function(agentId, topic, callback) {
 
 var eveOptions = {
   transports: [
-    {protocol: "p2p"}
+    {protocol: "local"}
   ],
   agents: [
     {agentClass: agentImplementation, name: "test"}

@@ -1,7 +1,7 @@
 /**
  * Created by Alex on 4/24/14.
  */
-var P2PImplementation = {
+var LocalImplementation = {
 
   /**
    * required init function
@@ -10,7 +10,7 @@ var P2PImplementation = {
    */
   init : function(options, eve) {
     this.eve = eve;
-    this.prefix = "p2p://";
+    this.prefix = "local://";
   },
 
   /**
@@ -62,4 +62,4 @@ var P2PImplementation = {
   }
 };
 
-module.exports = P2PImplementation;
+module.exports = LocalImplementation;

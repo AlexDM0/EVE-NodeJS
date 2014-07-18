@@ -7,7 +7,7 @@ var Eve = require('Evejs');
 
 var eveOptions = {
   transports: [
-    {protocol: "p2p"},
+    {protocol: "local"},
     {
       protocol: "http",
       options: {

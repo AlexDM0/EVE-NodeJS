@@ -10,7 +10,7 @@ var http = require('http');
  *
  * {Number}  options.port | Port to listen on.
  * {String}  options.path | Path, with or without leading and trailing slash (/)
- * {Boolean} options.p2pIfAvailable | if the agentId exists locally, use local transport. (p2p)
+ * {Boolean} options.localIfAvailable | if the agentId exists locally, use local transport. (local)
  *
  * Address: http://127.0.0.1:PORTNUMBER/PATH
  */
@@ -25,7 +25,7 @@ var HTTPImplementation = {
     this.eve = eve;
     this.port = options.port || 3000;
     this.path = options.path || "agents/";
-    this.p2pIfAvailable = options.p2pIfAvailable || false;
+    this.localShortcut = options.localShortcut || false;
 
     if (this.path.slice(-1) != "/") {this.path += "/";}
     if (this.path[0] != "/")        {this.path = "/" + this.path;}
@@ -43,9 +43,9 @@ var HTTPImplementation = {
    */
   sendMessage : function(receiverAddress, message, senderId) {
     var agentId = this.getAgentId(receiverAddress);
-    // send over p2p if possible
-    if (this.eve.agents[agentId] !== undefined && this.p2pIfAvailable == true) {
-      this.eve.sendMessage("p2p://" + agentId, message, senderId, null);
+    // send over local if possible
+    if (this.eve.agents[agentId] !== undefined && this.localShortcut == true) {
+      this.eve.sendMessage("local://" + agentId, message, senderId, null);
       return;
     }
 

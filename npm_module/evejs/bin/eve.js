@@ -7,9 +7,9 @@ var agentBase = require("../lib/modules/agentBase.js");
 
 /**
  *  Eve handles the composition of messages, routing, delivering and implementing callbacks.
- *  p2p and http protocols are supported.
+ *  local and http protocols are supported.
  *
- *  The p2p is loaded by default since some internal processes use this layer. (http over p2p when available, pubsub.. etc)
+ *  The local is loaded by default since some internal processes use this layer. (http over local when available, pubsub.. etc)
  *  @param {object} options |-{Array of objects}  options.transports
  *                            |_ {protocol: "protocolName"[, options: {transportSpecificOptions}]}
  *                          |-{Array of objects}  options.agents
@@ -32,8 +32,8 @@ function Eve(options) {
     }
   }
   // always load the peer 2 peer protocol
-  if (this.transports['p2p'] === undefined) {
-    this.addTransport({protocol:"p2p"});
+  if (this.transports['local'] === undefined) {
+    this.addTransport({protocol:"local"});
   }
 
   // set the default protocol
@@ -41,7 +41,7 @@ function Eve(options) {
     this.defaultTransport = options.transports[0].protocol; // the first transport is the default one.
   }
   else {
-    this.defaultTransport = "p2p";
+    this.defaultTransport = "local";
   }
 
   // add agents
@@ -201,9 +201,10 @@ Eve.prototype.sendMessage = function(address, message, senderId, callback) {
   this.sendCallCounter += 1;
   var me = this;
   var transportType, receiverAddress;
-  if (address.indexOf("://") != -1) {
+  var transportTypIdx = address.indexOf("://");
+  if (transportTypIdx != -1) {
     receiverAddress = address;
-    transportType = address.substring(0,4).replace(":","");
+    transportType = address.substring(0,transportTypIdx);;
   }
   else {
     transportType = this.defaultTransport;

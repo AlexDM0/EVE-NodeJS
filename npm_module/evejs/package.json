@@ -4,7 +4,9 @@
   "description": "NodeJS platform for Eve agents",
   "version": "0.3.2",
   "repository": "https://github.com/AlexDM0/EVE-NodeJS",
-  "dependencies": {},
+  "dependencies": {
+    "ws":"latest"
+  },
   "engines": {
     "node": "0.10.x"
   }
