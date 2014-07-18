@@ -42,7 +42,7 @@ The path of the agentClass is relative to the root of your project. That means t
 :--------|:-----|:-----------
 transports|Array|Each object given to the transport array has to consist of a field called ```protocol```. This also needs to be present in the address as ```protocol://AgentName```. If a protocol is not defined in the address when sending a message, the message is automatically sent over the default transport. The default transport is p2p or the first transport defined: eveOptions.transports[0]. 
 agents|Array|Each agent object given to the agents array has to contain the fields ```agentClass```, which is a path to where the agent's javascript module can be found and ```name```, the name of the agent as Eve will identify it.
-[agentModules]|Array|Optionally, agents can be extended with agentModules. Some modules, like ```publishSubscribe```, are provided by EveJS. Others can be created by the user. These modules extend the default built in methods the agents can use.
+[agentModules]|Array|Optionally, agents can be extended with agentModules. Some modules, like ```publishSubscribe```, are provided by EveJS. Others can be created by the user. These modules extend the default built-in methods the agents can use.
 
 
 ---
@@ -143,7 +143,7 @@ this.die();                                     // kill the agent
 ---
 ### Agent Modules
 
-Agent modules can be used to expand the built in methods the agents can use. These methods are added to all agents.
+Agent modules can be used to expand the built-in methods the agents can use. These methods are added to all agents.
 The modules themselves are quite simple, they contain a function that requires an agent object, add functions and or variables to the agent and finally return the extended agent.
 ```
 module.exports = myAgentModule;
@@ -228,7 +228,7 @@ function askAgent(url,method,params,callback, async) {
     async = true;
   }
   // create post request
-  var POSTrequest = JSON.stringify({"id":0, "method": method, "params": params});
+  var POSTrequest = JSON.stringify({"method": method, "params": params});
 
   // create XMLHttpRequest object to send the POST request
   var http = new XMLHttpRequest();
