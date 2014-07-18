@@ -7,8 +7,6 @@ Eve has a library available in JavaScript, running on Node.js. This library prov
 
 Eve for nodeJS is available as an npm package called *evejs*.
 
-The npm_module folder contains the npm package. The other maps are private experiments using the npm module. This will be split up in the future when EveJS is a bit more mature.
-
 ---
 
 ### EveJS Example
@@ -267,3 +265,9 @@ askAgent(
     true
 );
 ```
+
+
+----------
+
+
+> Written with [StackEdit](https://stackedit.io/).
