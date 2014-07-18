@@ -42,6 +42,11 @@ var websocketImplementation = {
    * @param {String} senderId         | Without prefix
    */
   sendMessage : function(receiverAddress, messageContent, senderId) {
+
+
+  },
+
+  initiateConnection : function(server, message) {
     var WebSocket = require('ws')
     var ws = new WebSocket('ws://www.host.com/path');
     ws.on('open', function() {
