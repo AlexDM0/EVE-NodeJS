@@ -4,6 +4,7 @@
  */
 var gameOfLifeAgent = {RPCfunctions: {}};
 
+// mandatory init function
 gameOfLifeAgent.init = function () {
   console.log(this.agentName + " added");
   this.alive = this.options.alive == "-" ? false : true;
@@ -15,6 +16,7 @@ gameOfLifeAgent.init = function () {
   this.cycleMatchCount = 0;
 };
 
+// get the agent names of all the neighbours
 gameOfLifeAgent.getNeighbours = function() {
   var gw = this.options.width;
   var gh = this.options.height;
@@ -84,7 +86,8 @@ gameOfLifeAgent.getNeighbours = function() {
   }
 };
 
-gameOfLifeAgent.RPCfunctions.collect = function (params, senderId) {
+// this function is called by the neighbours to notify this agent of their state
+gameOfLifeAgent.RPCfunctions.collect = function (params) {
   if (params.cycle == this.cycle) {
     this.cycleMatchCount += 1;
     if (params.alive == true) {
@@ -97,6 +100,7 @@ gameOfLifeAgent.RPCfunctions.collect = function (params, senderId) {
   }
 };
 
+// determine the state
 gameOfLifeAgent.processRules = function () {
   this.cycle += 1;
   if (this.amountAlive < 2 || this.amountAlive > 3) {
@@ -115,14 +119,15 @@ gameOfLifeAgent.processRules = function () {
   }
 };
 
-
+// update the neighbours of my state
 gameOfLifeAgent.updateNeighbours = function () {
   for (var i = 0; i < 8;i++){
     this.send(this.neighbours[i],{method:"collect",params:{cycle:this.cycle, alive:this.alive}});
   }
 };
 
-gameOfLifeAgent.RPCfunctions.start = function(params, senderId) {
+// start the game of life
+gameOfLifeAgent.RPCfunctions.start = function() {
   this.updateNeighbours();
 };
 

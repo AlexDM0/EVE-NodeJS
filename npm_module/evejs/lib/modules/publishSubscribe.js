@@ -1,11 +1,3 @@
-/**
- * Created by Alex on 7/9/14.
- */
-
-/**
- * Created by Alex on 4/24/14.
- */
-
 module.exports = pubSub;
 
 /**

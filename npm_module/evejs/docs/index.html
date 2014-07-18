@@ -44,7 +44,7 @@
     </span><span class="pun">}</span><span class="pln">
   </span><span class="pun">],</span><span class="pln">
   agents</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
-    </span><span class="pun">{</span><span class="pln">agentClass</span><span class="pun">:</span><span class="pln"> </span><span class="str">"./agents/mathAgent"</span><span class="pun">,</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">"mathAgent"</span><span class="pun">},</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">agentClass</span><span class="pun">:</span><span class="pln"> </span><span class="str">"./agents/mathAgent"</span><span class="pun">,</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">"mathAgent"</span><span class="pun">},</span><span class="pln"> 
     </span><span class="pun">...</span><span class="pln">
   </span><span class="pun">],</span><span class="pln">
   agentModules</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
@@ -60,29 +60,29 @@
 <h4 id="evejs-options">EveJS options:</h4>
 
 <table>
-    <thead>
-    <tr>
-        <th style="text-align:left;">name</th>
-        <th style="text-align:left;">type</th>
-        <th style="text-align:left;">description</th>
-    </tr>
-    </thead>
-    <tbody><tr>
-        <td style="text-align:left;">transports</td>
-        <td style="text-align:left;">Array</td>
-        <td style="text-align:left;">Each object given to the transport array has to consist of a field called <code>protocol</code>. This also needs to be present in the address as <code>protocol://AgentName</code>. If a protocol is not defined in the address when sending a message, the message is automatically sent over the default transport. The default transport is p2p or the first transport defined: eveOptions.transports[0].</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">agents</td>
-        <td style="text-align:left;">Array</td>
-        <td style="text-align:left;">Each agent object given to the agents array has to contain the fields <code>agentClass</code>, which is a path to where the agent’s javascript module can be found and <code>name</code>, the name of the agent as Eve will identify it.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">[agentModules]</td>
-        <td style="text-align:left;">Array</td>
-        <td style="text-align:left;">Optionally, agents can be extended with agentModules. Some modules, like <code>publishSubscribe</code>, are provided by EveJS. Others can be created by the user. These modules extend the default built in methods the agents can use.</td>
-    </tr>
-    </tbody></table>
+<thead>
+<tr>
+  <th style="text-align:left;">name</th>
+  <th style="text-align:left;">type</th>
+  <th style="text-align:left;">description</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td style="text-align:left;">transports</td>
+  <td style="text-align:left;">Array</td>
+  <td style="text-align:left;">Each object given to the transport array has to consist of a field called <code>protocol</code>. This also needs to be present in the address as <code>protocol://AgentName</code>. If a protocol is not defined in the address when sending a message, the message is automatically sent over the default transport. The default transport is p2p or the first transport defined: eveOptions.transports[0].</td>
+</tr>
+<tr>
+  <td style="text-align:left;">agents</td>
+  <td style="text-align:left;">Array</td>
+  <td style="text-align:left;">Each agent object given to the agents array has to contain the fields <code>agentClass</code>, which is a path to where the agent’s javascript module can be found and <code>name</code>, the name of the agent as Eve will identify it.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">[agentModules]</td>
+  <td style="text-align:left;">Array</td>
+  <td style="text-align:left;">Optionally, agents can be extended with agentModules. Some modules, like <code>publishSubscribe</code>, are provided by EveJS. Others can be created by the user. These modules extend the default built in methods the agents can use.</td>
+</tr>
+</tbody></table>
 
 
 <hr>
@@ -92,7 +92,7 @@
 <p>EveJS currently supports two transport layers. These are stand-alone and determined by the address to which the message is sent.</p>
 
 <ul>
-    <li><strong>p2p</strong> - Peer 2 Peer, or local transport is loaded by default for sending messages within the same Eve instance.</li>
+<li><strong>p2p</strong> - Peer 2 Peer, or local transport is loaded by default for sending messages within the same Eve instance.</li>
 </ul>
 
 <pre class="prettyprint prettyprinted"><code><span class="pln">options </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span><span class="pln"> </span><span class="com">// the p2p transport layer has no options</span><span class="pln">
@@ -100,8 +100,8 @@
 example</span><span class="pun">:</span><span class="pln"> </span><span class="str">"p2p://agentName"</span></code></pre>
 
 <ul>
-    <li><strong>http</strong> - When http is selected, EveJS automatically creates a native Nodejs server to listen on a pre-/userdefined port. EveJS can be <br>
-        configured to send a message over the p2p transport if the agent is detected on the same instance to increase performance.</li>
+<li><strong>http</strong> - When http is selected, EveJS automatically creates a native Nodejs server to listen on a pre-/userdefined port. EveJS can be <br>
+configured to send a message over the p2p transport if the agent is detected on the same instance to increase performance.</li>
 </ul>
 
 <pre class="prettyprint prettyprinted"><code><span class="pln">options</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
@@ -113,37 +113,37 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 example</span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://127.0.0.1:3000/myAgents/agentName"</span></code></pre>
 
 <table>
-    <thead>
-    <tr>
-        <th style="text-align:left;">option</th>
-        <th style="text-align:left;">type</th>
-        <th style="text-align:left;">default</th>
-        <th style="text-align:left;">description</th>
-    </tr>
-    </thead>
-    <tbody><tr>
-        <td style="text-align:left;">port</td>
-        <td style="text-align:left;">Number</td>
-        <td style="text-align:left;">3000</td>
-        <td style="text-align:left;">The port EveJS will listen on</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">path</td>
-        <td style="text-align:left;">String</td>
-        <td style="text-align:left;">agents</td>
-        <td style="text-align:left;">The path after localhost (or 127.0.0.1)</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">p2pIfAvailable</td>
-        <td style="text-align:left;">Boolean</td>
-        <td style="text-align:left;">false</td>
-        <td style="text-align:left;">When true, send message over p2p if possible</td>
-    </tr>
-    </tbody></table>
+<thead>
+<tr>
+  <th style="text-align:left;">option</th>
+  <th style="text-align:left;">type</th>
+  <th style="text-align:left;">default</th>
+  <th style="text-align:left;">description</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td style="text-align:left;">port</td>
+  <td style="text-align:left;">Number</td>
+  <td style="text-align:left;">3000</td>
+  <td style="text-align:left;">The port EveJS will listen on</td>
+</tr>
+<tr>
+  <td style="text-align:left;">path</td>
+  <td style="text-align:left;">String</td>
+  <td style="text-align:left;">agents</td>
+  <td style="text-align:left;">The path after localhost (or 127.0.0.1)</td>
+</tr>
+<tr>
+  <td style="text-align:left;">p2pIfAvailable</td>
+  <td style="text-align:left;">Boolean</td>
+  <td style="text-align:left;">false</td>
+  <td style="text-align:left;">When true, send message over p2p if possible</td>
+</tr>
+</tbody></table>
 
 
 <ul>
-    <li><strong>default</strong> - The first transport protocol that is given in the options will be the default transport protocol. If no transport protocol is defined in the options, the p2p protocol will be the default.</li>
+<li><strong>default</strong> - The first transport protocol that is given in the options will be the default transport protocol. If no transport protocol is defined in the options, the p2p protocol will be the default.</li>
 </ul>
 
 <pre class="prettyprint prettyprinted"><code><span class="pln">example</span><span class="pun">:</span><span class="pln"> </span><span class="str">"agentName"</span><span class="pln"> </span></code></pre>
@@ -171,63 +171,63 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 <p>This is a list of the functions an EveJS agent can use.</p>
 
 <table>
-    <thead>
-    <tr>
-        <th style="text-align:left;">function</th>
-        <th style="text-align:left;">arguments</th>
-        <th style="text-align:left;">return</th>
-        <th style="text-align:left;">description</th>
-    </tr>
-    </thead>
-    <tbody><tr>
-        <td style="text-align:left;">send</td>
-        <td style="text-align:left;">address, message, callback</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">send a message (reply) {console.log(reply.result);}“`</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">schedule</td>
-        <td style="text-align:left;">function, time</td>
-        <td style="text-align:left;">id</td>
-        <td style="text-align:left;">Schedule a function to be performed after <code>time</code> ms.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">clearSchedule</td>
-        <td style="text-align:left;">id</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Remove a specific scheduled function.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">clearAllSchedules</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Remove all scheduled functions.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">repeat</td>
-        <td style="text-align:left;">function, timeInterval</td>
-        <td style="text-align:left;">id</td>
-        <td style="text-align:left;">Repeat a function after <code>timeInterval</code> (in ms), every <code>timeInterval</code> until stopped.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">stopRepeating</td>
-        <td style="text-align:left;">id</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Stop repeating all specific repeating function.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">stopRepeatingAll</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Stop repeating all repeating functions.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">die</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Remove the agent.</td>
-    </tr>
-    </tbody></table>
+<thead>
+<tr>
+  <th style="text-align:left;">function</th>
+  <th style="text-align:left;">arguments</th>
+  <th style="text-align:left;">return</th>
+  <th style="text-align:left;">description</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td style="text-align:left;">send</td>
+  <td style="text-align:left;">address, message, callback</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">send a message (reply) {console.log(reply.result);}“`</td>
+</tr>
+<tr>
+  <td style="text-align:left;">schedule</td>
+  <td style="text-align:left;">function, time</td>
+  <td style="text-align:left;">id</td>
+  <td style="text-align:left;">Schedule a function to be performed after <code>time</code> ms.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">clearSchedule</td>
+  <td style="text-align:left;">id</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Remove a specific scheduled function.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">clearAllSchedules</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Remove all scheduled functions.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">repeat</td>
+  <td style="text-align:left;">function, timeInterval</td>
+  <td style="text-align:left;">id</td>
+  <td style="text-align:left;">Repeat a function after <code>timeInterval</code> (in ms), every <code>timeInterval</code> until stopped.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">stopRepeating</td>
+  <td style="text-align:left;">id</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Stop repeating all specific repeating function.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">stopRepeatingAll</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Stop repeating all repeating functions.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">die</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Remove the agent.</td>
+</tr>
+</tbody></table>
 
 
 <h4 id="usage-examples">Usage examples</h4>
@@ -261,7 +261,7 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 <h3 id="agent-modules">Agent Modules</h3>
 
 <p>Agent modules can be used to expand the built in methods the agents can use. These methods are added to all agents. <br>
-    The modules themselves are quite simple, they contain a function that requires an agent object, add functions and or variables to the agent and finally return the extended agent.</p>
+The modules themselves are quite simple, they contain a function that requires an agent object, add functions and or variables to the agent and finally return the extended agent.</p>
 
 <pre class="prettyprint prettyprinted"><code><span class="kwd">module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> myAgentModule</span><span class="pun">;</span><span class="pln">
 
@@ -284,45 +284,45 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 <h4 id="available-modules">Available Modules:</h4>
 
 <ul>
-    <li><strong>publishSubscribe</strong> <br>
-        The publishSubscribe adds functions to for publishing and subscribing to all agents. <br>
-        An extra agent called  _publishPortal will be created. This received all published messages. On a subscription, a _topicAgent will be created. The _publishPortal will forward the data to the corresponding _topicAgent which will then perform all the subscribed callbacks. Here is a list of the functions publishSubscribe contains:</li>
+<li><strong>publishSubscribe</strong> <br>
+The publishSubscribe adds functions to for publishing and subscribing to all agents. <br>
+An extra agent called  _publishPortal will be created. This received all published messages. On a subscription, a _topicAgent will be created. The _publishPortal will forward the data to the corresponding _topicAgent which will then perform all the subscribed callbacks. Here is a list of the functions publishSubscribe contains:</li>
 </ul>
 
 <table>
-    <thead>
-    <tr>
-        <th style="text-align:left;">function</th>
-        <th style="text-align:left;">arguments</th>
-        <th style="text-align:left;">return</th>
-        <th style="text-align:left;">description</th>
-    </tr>
-    </thead>
-    <tbody><tr>
-        <td style="text-align:left;">publish</td>
-        <td style="text-align:left;">topic, data</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Publish the data to a topic.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">subscribe</td>
-        <td style="text-align:left;">topic, callback</td>
-        <td style="text-align:left;">id</td>
-        <td style="text-align:left;">Subscribe to a topic. For each message received on the topic, the callback function will be called with one argument containing the published data.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">unsubscribe</td>
-        <td style="text-align:left;">topic, [callback]</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Unsubscribed a callback from a subscribed topic. If no callback is defined, all the callbacks are unsubscribed from this topic.</td>
-    </tr>
-    <tr>
-        <td style="text-align:left;">unsubscribeAll</td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;"></td>
-        <td style="text-align:left;">Unsubscribe from all subscribed topics.</td>
-    </tr>
-    </tbody></table>
+<thead>
+<tr>
+  <th style="text-align:left;">function</th>
+  <th style="text-align:left;">arguments</th>
+  <th style="text-align:left;">return</th>
+  <th style="text-align:left;">description</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td style="text-align:left;">publish</td>
+  <td style="text-align:left;">topic, data</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Publish the data to a topic.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">subscribe</td>
+  <td style="text-align:left;">topic, callback</td>
+  <td style="text-align:left;">id</td>
+  <td style="text-align:left;">Subscribe to a topic. For each message received on the topic, the callback function will be called with one argument containing the published data.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">unsubscribe</td>
+  <td style="text-align:left;">topic, [callback]</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Unsubscribed a callback from a subscribed topic. If no callback is defined, all the callbacks are unsubscribed from this topic.</td>
+</tr>
+<tr>
+  <td style="text-align:left;">unsubscribeAll</td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;"></td>
+  <td style="text-align:left;">Unsubscribe from all subscribed topics.</td>
+</tr>
+</tbody></table>
 
 
 <hr>
@@ -332,9 +332,9 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 <p>There are a few example agents provided. The example below shows a mathAgent, which can do additions. There is also a game of life agent available for benchmarking. To use the examples bundled with EveJS, copy the examples folder to your project root (ie. in the same place as the node_modules containing evejs).</p>
 
 <p>Other examples: <br>
-    - Game of Life <br>
-    - Publish Subscibe <br>
-    - Math agent</p>
+- Game of Life <br>
+- Publish Subscibe <br>
+- Math agent</p>
 
 <pre class="prettyprint prettyprinted"><code><span class="kwd">module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> mathAgent</span><span class="pun">;</span><span class="pln">
 
@@ -343,7 +343,7 @@ example</span><span class="pun">:</span><span class="pln"> </span><span class="s
 </span><span class="com">// mandatory init function</span><span class="pln">
 mathAgent</span><span class="pun">.</span><span class="pln">init </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
   </span><span class="com">// print the creation of this agent to the console.</span><span class="pln">
-  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">agentName </span><span class="pun">+</span><span class="pln"> </span><span class="str">" added"</span><span class="pun">);</span><span class="pln">
+  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">agentName </span><span class="pun">+</span><span class="pln"> </span><span class="str">" added"</span><span class="pun">);</span><span class="pln"> 
 </span><span class="pun">};</span><span class="pln">
 
 </span><span class="com">/**
@@ -353,7 +353,7 @@ mathAgent</span><span class="pun">.</span><span class="pln">init </span><span cl
                                     The HTTP protocol does this with an extra header: "x-eve-senderurl".
                                     If this is not the case, senderId == "unknown".
  */</span><span class="pln">
-mathAgent</span><span class="pun">.</span><span class="typ">RPCfunctions</span><span class="pun">.</span><span class="pln">add </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">params</span><span class="pun">,</span><span class="pln"> senderId</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+mathAgent</span><span class="pun">.</span><span class="typ">RPCfunctions</span><span class="pun">.</span><span class="pln">add </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">params</span><span class="pun">,</span><span class="pln"> senderId</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> 
   </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">params</span><span class="pun">.</span><span class="pln">a </span><span class="pun">+</span><span class="pln"> </span><span class="kwd">params</span><span class="pun">.</span><span class="pln">b</span><span class="pun">;</span><span class="pln">
 </span><span class="pun">};</span></code></pre>
 
@@ -414,13 +414,27 @@ askAgent</span><span class="pun">(</span><span class="pln">
 </span><span class="pun">);</span></code></pre>
 
 <hr>
+<h3 id="license">License</h3>
+
+<p>Copyright (C) 2010-2014 Almende B.V.</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the “License”); <br>
+you may not use this file except in compliance with the License. <br>
+You may obtain a copy of the License at</p>
+
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+
+<p>Unless required by applicable law or agreed to in writing, software <br>
+distributed under the License is distributed on an “AS IS” BASIS, <br>
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. <br>
+See the License for the specific language governing permissions and <br>
+limitations under the License.</p>
+
+<hr>
 
 <blockquote>
-    <p>Written with <a href="https://stackedit.io/">StackEdit</a>. Style from <a href="https://stackedit.io/">StackEdit</a>.</p>
+  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
 </blockquote>
-<br /><br /><br /><br /><br />
-
-
 
 </div>
 </body>

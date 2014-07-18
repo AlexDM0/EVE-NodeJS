@@ -7,7 +7,7 @@
 
 var mathAgent = {RPCfunctions: {}};
 
-// mandaory init functoin
+// mandaory init function
 mathAgent.init = function () {
   console.log(this.agentName + " added");
   this.schedule(this.sendMessageToSelf,1000); // wait a second, then send a message to itself

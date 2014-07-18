@@ -15,7 +15,7 @@ for (var i = 0; i < gridWidth*gridHeight; i++) {
   gameOfLifeAgents.push({
     agentClass: 'gameOfLifeAgent',
     name: "Agent_" + i,
-    options:{width:gridWidth, height:gridHeight, alive:state, maxCycles:maxCycles}
+    options:{width:gridWidth, height:gridHeight, alive: state, maxCycles:maxCycles}
   })
 }
 

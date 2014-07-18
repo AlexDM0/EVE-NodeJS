@@ -13,7 +13,7 @@ var eveOptions = {
     {protocol: "http", options: {port: 3000, path: "agents/"}}
   ],
   agents: [
-    {agentClass: "mathAgent", name: "mathAgentFrank"} // adding the agent.
+    {agentClass: "mathAgent.js", name: "mathAgentFrank"} // adding the agent.
   ]
 };
 var eve = new Eve(eveOptions);
