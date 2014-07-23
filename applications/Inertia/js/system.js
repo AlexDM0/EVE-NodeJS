@@ -55,7 +55,7 @@ function updateVis(reply) {
         for (var j = 0; j < agentData.data[dataId].length; j++) {
           var point = agentData.data[dataId][j].data;;
           var processedGraph2DPoint =  {x:point.startTime,     y:0, group:groupName};
-          var processedTimelinePoint = {start:point.startTime, content: point.datapoint,  group:groupName};
+          var processedTimelinePoint = {start:point.startTime, content: point.dataPoint,  group:groupName};
 
           if (point.dataPoint.toLowerCase() == "on" || point.dataPoint.toLowerCase() == "open") {
             processedGraph2DPoint.y = 1;
@@ -187,6 +187,4 @@ function toggleGraph(groupId) {
     graph2dGroups.update({id:groupId, visible:true});
     container.className = container.className.replace("hidden","");
   }
-
-  graph2d.fit();
 }
