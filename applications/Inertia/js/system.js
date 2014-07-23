@@ -32,7 +32,7 @@ function onLoad() {
   timeline.setGroups(timelineGroups);
   timeline.setItems(timelineDatapoints);
 
-  setTimeout(refreshData.bind(this,updateVis), 10);
+  setInterval(refreshData.bind(this,updateVis), 2000);
 }
 
 
@@ -86,18 +86,12 @@ function updateVis(reply) {
   }
 
   if (timelinePoints.length > 0) {
-    if (groupExists(timelineGroups, groupName) == false) {
-      timelineGroups.add({id:groupName,  content: groupName});
-      console.log("here")
-    }
     timelineDatapoints.clear();
     timelineDatapoints.add(timelinePoints);
     timeline.fit();
   }
+
   if (graph2dPoints.length > 0) {
-    if (groupExists(graph2dGroups, groupName) == false) {
-      graph2dGroups.add({id:groupName, content: groupName})
-    }
     graph2dDatapoints.clear();
     graph2dDatapoints.add(graph2dPoints);
     graph2d.fit();
@@ -160,6 +154,13 @@ function populateExternalLegend() {
       descriptionDiv.style.textAlign = "right";
       containerDiv.appendChild(descriptionDiv);
       containerDiv.appendChild(iconDiv);
+    }
+
+    if (graph2d.isGroupVisible(groupsData[i].id) == false) {
+      containerDiv.className = containerDiv.className + " hidden";
+    }
+    else { // if invisible, show
+      containerDiv.className = containerDiv.className.replace("hidden","");
     }
 
     // append to the legend container div

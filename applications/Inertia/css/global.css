@@ -148,5 +148,5 @@ svg.legendIcon {
 div.externalLegend {
     position:relative;
     margin-left: -5px;
-    width: 1200px;
+    width: 100%;
 }
