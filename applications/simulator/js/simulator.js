@@ -29,7 +29,7 @@ window.onload = function () {
     edges: {color: {color: 'white', highlight: 'red'}},
     stabilize: false
   };
-  var graph = new vis.Graph(visContainer, visData, visOptions);
+  var graph = new vis.Network(visContainer, visData, visOptions);
   var stepSize = 48;
 
   var buttonStartSimulation = document.getElementById("buttonStartSimulation");
