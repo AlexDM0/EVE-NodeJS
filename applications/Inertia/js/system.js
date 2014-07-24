@@ -24,7 +24,7 @@ function onLoad() {
     dataAxis: {showMinorLabels: false}
   };
 
-  var timelineOptions = {};
+  var timelineOptions = {minHeight:400};
   graph2d = new vis.Graph2d(graph2dContainer, graph2dDatapoints, graph2dOptions, graph2dGroups);
 
   timeline = new vis.Timeline(timelineContainer);

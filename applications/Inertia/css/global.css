@@ -150,3 +150,7 @@ div.externalLegend {
     margin-left: -5px;
     width: 100%;
 }
+
+body {
+    min-height:1200px;
+}
