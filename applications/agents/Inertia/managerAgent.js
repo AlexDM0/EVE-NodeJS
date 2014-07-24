@@ -16,7 +16,7 @@ managerAgent.RPCfunctions.agentExists = function(params) {
     return "yes";
   }
   else {
-    var newAgent = {agentClass: "./agents/Inertia/eventAgent", name: agentName};
+    var newAgent = {agentClass: "./agents/Inertia/deviceAgent", name: agentName};
     this.eve.addAgent.call(this.eve, newAgent);
     return "created";
   }

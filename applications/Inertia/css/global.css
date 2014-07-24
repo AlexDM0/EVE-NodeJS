@@ -107,11 +107,11 @@
 
 div.descriptionContainer {
     float:left;
-    height:30px;
+    height:15px;
     width:160px;
     padding-left:5px;
     padding-right:5px;
-    line-height: 30px;
+    line-height: 15px;
 }
 
 div.iconContainer {
@@ -120,8 +120,8 @@ div.iconContainer {
 
 div.legendElementContainer {
     display:inline-block;
-    width:200px;
-    height:30px;
+    width:400px;
+    height:15px;
     border-style:solid;
     border-width:1px;
     border-color: #e0e0e0;
@@ -141,8 +141,8 @@ div.legendElementContainer.hidden {
 }
 
 svg.legendIcon {
-    width:30px;
-    height:30px;
+    width:15px;
+    height:15px;
 }
 
 div.externalLegend {
@@ -152,5 +152,5 @@ div.externalLegend {
 }
 
 body {
-    min-height:1200px;
+    min-height:2000px;
 }

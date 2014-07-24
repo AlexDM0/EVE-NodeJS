@@ -2,9 +2,9 @@
  * Created by Alex on 7/23/14.
  */
 
-var eventAgent = {RPCfunctions: {}};
+var deviceAgent = {RPCfunctions: {}};
 
-eventAgent.init = function() {
+deviceAgent.init = function() {
   // mandatory init function
   this.sensorType = "";
   this.data = {};
@@ -13,9 +13,11 @@ eventAgent.init = function() {
 
 }
 
-eventAgent.RPCfunctions.receiveEvent = function(params) {
+deviceAgent.RPCfunctions.receiveEvent = function(params) {
   var event = params.event;
   this.sensorType = event['typeof'];
+
+  var metaData = {};
 
   for (var i = 0; i < event.ioTProperty.length; i++) {
     var ioTProperty = event.ioTProperty[i];
@@ -31,10 +33,12 @@ eventAgent.RPCfunctions.receiveEvent = function(params) {
       resultTime: ioTProperty.ioTStateObservation[0].resultTime
     }
     this.data[ioTProperty.name].push({data:data, token:0});
+
+
   }
 
-  return {name: this.agentName, type: this.sensorType, data: this.data};
+  return {name: this.agentName, type: this.sensorType, data: this.data, meta: metaData};
 }
 
 
-module.exports = eventAgent;
+module.exports = deviceAgent;

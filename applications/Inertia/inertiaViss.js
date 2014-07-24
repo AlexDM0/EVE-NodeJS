@@ -6,7 +6,7 @@
 var Eve = require('Evejs');
 
 var serverIP = "127.0.0.1";
-var registerAddress = "http://rickspc:3000/agents/unit"
+var registerAddress = "http://rickspc:3000/agents/unit";
 var http = {
   protocol: "http",
   options: {

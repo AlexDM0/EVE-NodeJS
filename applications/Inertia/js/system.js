@@ -10,6 +10,8 @@ var timeline;
 var timelineDatapoints;
 var timelineGroups;
 
+var fitted = false;
+
 function onLoad() {
   // create a dataSet with groups
   graph2dGroups = new vis.DataSet();
@@ -21,6 +23,7 @@ function onLoad() {
   var timelineContainer = document.getElementById('timelineDiv');
 
   var graph2dOptions = {
+    catmullRom: false,
     dataAxis: {showMinorLabels: false}
   };
 
@@ -49,23 +52,24 @@ function updateVis(reply) {
     var agentData = data[i];
     var graph2dUsed = false;
     var timelineUsed = false;
-    var groupName = agentData.name.substring(agentData.name.indexOf(":"), agentData.name.length)
+    console.log(agentData);
+    var groupName = agentData.type[0] + agentData.name.substring(agentData.name.indexOf(":"), agentData.name.length);
     for (var dataId in agentData.data) {
       if (agentData.data.hasOwnProperty(dataId)) {
         for (var j = 0; j < agentData.data[dataId].length; j++) {
           var point = agentData.data[dataId][j].data;;
           var processedGraph2DPoint =  {x:point.startTime,     y:0, group:groupName};
-          var processedTimelinePoint = {start:point.startTime, content: point.dataPoint,  group:groupName};
+          var processedTimelinePoint = {start:point.startTime, title: dataId,  content: point.dataPoint,  group:groupName};
 
-          if (point.dataPoint.toLowerCase() == "on" || point.dataPoint.toLowerCase() == "open") {
-            processedGraph2DPoint.y = 1;
-          }
-          else if (point.dataPoint.toLowerCase() == "off" || point.dataPoint.toLowerCase() == 'closed') {
-            processedGraph2DPoint.y = 0;
-          }
-          else {
+//          if (point.dataPoint.toLowerCase() == "on" || point.dataPoint.toLowerCase() == "open") {
+//            processedGraph2DPoint.y = 1;
+//          }
+//          else if (point.dataPoint.toLowerCase() == "off" || point.dataPoint.toLowerCase() == 'closed') {
+//            processedGraph2DPoint.y = 0;
+//          }
+//          else {
             processedGraph2DPoint.y = Number(point.dataPoint);
-          }
+//          }
 
           if (isNaN(processedGraph2DPoint.y) == true) {timelinePoints.push(processedTimelinePoint); timelineUsed = true;}
           else                                        {graph2dPoints.push(processedGraph2DPoint);   graph2dUsed = true;}
@@ -88,14 +92,19 @@ function updateVis(reply) {
   if (timelinePoints.length > 0) {
     timelineDatapoints.clear();
     timelineDatapoints.add(timelinePoints);
-    timeline.fit();
+    if (fitted == false) {
+      timeline.fit();
+    }
   }
 
   if (graph2dPoints.length > 0) {
     graph2dDatapoints.clear();
     graph2dDatapoints.add(graph2dPoints);
-    graph2d.fit();
+    if (fitted == false) {
+      graph2d.fit();
+    }
   }
+  fitted = true;
 
   populateExternalLegend();
 }
@@ -134,7 +143,7 @@ function populateExternalLegend() {
     descriptionDiv.className = "descriptionContainer";
 
     // get the legend for this group.
-    var legend = graph2d.getLegend(groupsData[i].id,30,30);
+    var legend = graph2d.getLegend(groupsData[i].id,15,15);
 
     // append class to icon. All styling classes from the vis.css have been copied over into the head here to be able to style the
     // icons with the same classes if they are using the default ones.

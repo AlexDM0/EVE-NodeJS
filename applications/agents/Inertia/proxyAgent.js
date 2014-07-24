@@ -35,7 +35,7 @@ proxyAgent.forwardMessage = function(managerReply, agentName, message) {
 };
 
 proxyAgent.storeData = function(reply) {
-  this.agentData[reply.name] = {name: reply.name, type: reply.type, data:reply.data};
+  this.agentData[reply.name] = {name: reply.name, type: reply.type, data:reply.data, meta: reply.meta};
 };
 
 proxyAgent.RPCfunctions.incoming = function(params) {
